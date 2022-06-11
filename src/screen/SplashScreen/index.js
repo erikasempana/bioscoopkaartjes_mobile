@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Image} from 'react-native';
+import SScreen from '../../assets/logo/splashScreen.png';
 
 export default function SplashScreen(props) {
   useEffect(() => {
@@ -14,8 +15,18 @@ export default function SplashScreen(props) {
   });
 
   return (
-    <View>
-      <Text>Splash Screen</Text>
+    <View
+      style={{
+        display: 'flex',
+        backgroundColour: '#DEDEDE',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: '40%',
+      }}>
+      <Image
+        source={SScreen}
+        style={{width: '70%', height: '70%', resizeMode: 'contain'}}
+      />
     </View>
   );
 }

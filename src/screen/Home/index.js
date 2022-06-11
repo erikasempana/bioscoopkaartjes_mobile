@@ -4,6 +4,8 @@ import styles from './styles';
 import TagLine from '../../assets/images/nearest.png';
 import ImageJumbotron from '../../assets/images/group.png';
 import {ScrollView} from 'react-native-gesture-handler';
+import MovieCard from '../../components/MovieCard/indext';
+import Month from '../../components/Month';
 
 export default function Home() {
   return (
@@ -15,20 +17,32 @@ export default function Home() {
             <Image style={styles.ImageJumbotron} source={ImageJumbotron} />
           </View>
         </View>
-        <View style={styles.container2} />
       </View>
       <View style={styles.wrapper2}>
         <View style={styles.container2}>
           <View style={styles.section2}>
             <View style={styles.nowshowing}>
-              <Text>Now Showing</Text>
+              <Text style={styles.nowshowText}>Now Showing</Text>
             </View>
             <View style={styles.viewall}>
-              <Text>view all</Text>
+              <Text style={styles.viewallText}>view all</Text>
             </View>
           </View>
         </View>
-        <View style={styles.container2} />
+        <MovieCard />
+      </View>
+      <View style={styles.wrapper3}>
+        <View style={styles.container3}>
+          <View style={styles.section3}>
+            <View style={styles.upcomingmovie}>
+              <Text style={styles.upcomingText}>Upcoming Movie</Text>
+            </View>
+            <View style={styles.viewall}>
+              <Text style={styles.viewallText}>view all</Text>
+            </View>
+          </View>
+          <Month />
+        </View>
       </View>
     </ScrollView>
   );
