@@ -11,6 +11,10 @@ import Home from '../screen/Home';
 import DrawerContent from '../components/DrawerContent';
 import Header from '../components/Header';
 import ViewAll from '../screen/ViewAll';
+import Profile from '../screen/Profile';
+import MovieDetail from '../screen/MovieDetail';
+import Order from '../screen/Order';
+import Payment from '../screen/Payment';
 
 function HomeNavigator() {
   return (
@@ -25,16 +29,63 @@ function HomeNavigator() {
         name="ViewAll"
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        component={Profile}
+        name="Profile"
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={MovieDetail}
+        name="MovieDetail"
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={Order}
+        name="Order"
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={Payment}
+        name="Payment"
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 }
 // Hanya untuk Screen Cabang page drawer di page yg sama
-// function ProfileNavigator() {
+function ViewAllNavigator() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        component={ViewAll}
+        name="ViewAll"
+        options={{headerShown: false}}
+      />
+      {/* <Stack.Screen
+        component={MovieDetail}
+        name="MovieDetail"
+        options={{headerShown: false}}
+      /> */}
+    </Stack.Navigator>
+  );
+}
+function ProfileNavigator() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        component={Profile}
+        name="Home"
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
+  );
+}
+// function MovieDetailNavigator() {
 //   return (
 //     <Stack.Navigator>
 //       <Stack.Screen
-//         component={Profile}
-//         name="Home"
+//         component={MovieDetail}
+//         name="MovieDetail"
 //         options={{headerShown: false}}
 //       />
 //     </Stack.Navigator>
@@ -58,16 +109,28 @@ export default function AppNavigator() {
         }}
       />
       {/* Hanya untuk Screen Cabang page drawer di page yg sama */}
-      {/* <Drawer.Screen
-        component={ProfileNavigator}
-        name="ProfileNavigator"
+      <Drawer.Screen
+        component={ViewAllNavigator}
+        name="ViewAllNavigator"
         options={{
-          title: 'Profile',
+          title: 'ViewAll',
+          header: props => <Header {...props} />,
           drawerIcon: ({size, color}) => {
             <Icon name="user" size={size} color={color} />;
           },
         }}
-      /> */}
+      />
+      <Drawer.Screen
+        component={ProfileNavigator}
+        name="ProfileNavigator"
+        options={{
+          title: 'Profile',
+          header: props => <Header {...props} />,
+          drawerIcon: ({size, color}) => {
+            <Icon name="user" size={size} color={color} />;
+          },
+        }}
+      />
     </Drawer.Navigator>
   );
 }
