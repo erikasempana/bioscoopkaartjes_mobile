@@ -6,7 +6,7 @@ export default StyleSheet.create({
     flex: 1,
   },
   container: {
-    paddingTop: 100,
+    paddingTop: 50,
     paddingEnd: 20,
     paddingStart: 20,
   },

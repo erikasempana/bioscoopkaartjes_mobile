@@ -1,14 +1,28 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
 import styles from './styles';
+import axios from '../../utils/axios';
 
 import logo from '../../assets/logo/logobiosscoopkaartjes.png';
 
 function LoginScreen(props) {
-  const handleLogin = () => {
+  const [form, setForm] = useState({
+    email: '',
+    password: '',
+  });
+
+  const handleLogin = async () => {
     props.navigation.navigate('AppScreen', {
       screen: 'Home',
     });
+    console.log(form);
+    const result = await axios.post('auth/login', form);
+    console.log(result);
+  };
+
+  const handleChangeForm = e => {
+    // e.target.value || e.target.name;
+    setForm({...form, [name]: text});
   };
 
   const handleRegister = () => {
@@ -32,13 +46,18 @@ function LoginScreen(props) {
         <View style={styles.inputwrapper}>
           <View>
             <Text style={styles.inputlabel}>Email</Text>
-            <TextInput style={styles.input1} placeholder="Write your email" />
+            <TextInput
+              style={styles.input1}
+              placeholder="Write your email"
+              onChangeText={text => handleChangeForm(text, 'email')}
+            />
           </View>
           <View>
             <Text style={styles.inputlabel2}>Password</Text>
             <TextInput
               style={styles.input2}
               placeholder="Write your password"
+              onChangeText={text => handleChangeForm(text, 'password')}
             />
           </View>
           <TouchableOpacity style={styles.button} onPress={handleLogin}>

@@ -4,10 +4,16 @@ import styles from './styles';
 import TagLine from '../../assets/images/nearest.png';
 import ImageJumbotron from '../../assets/images/group.png';
 import {ScrollView} from 'react-native-gesture-handler';
-import MovieCard from '../../components/MovieCard/indext';
+import MovieCard from '../../components/MovieCard';
 import Month from '../../components/Month';
+import MovieCardUpcoming from '../../components/MovieCardUpcoming';
+import Membership from '../../components/Membership';
+import Footer from '../../components/Footer';
 
-export default function Home() {
+export default function Home(props) {
+  const toViewAll = () => {
+    props.navigation.navigate('ViewAll');
+  };
   return (
     <ScrollView>
       <View style={styles.wrapper}>
@@ -25,7 +31,9 @@ export default function Home() {
               <Text style={styles.nowshowText}>Now Showing</Text>
             </View>
             <View style={styles.viewall}>
-              <Text style={styles.viewallText}>view all</Text>
+              <Text style={styles.viewallText} onPress={toViewAll}>
+                view all
+              </Text>
             </View>
           </View>
         </View>
@@ -38,12 +46,17 @@ export default function Home() {
               <Text style={styles.upcomingText}>Upcoming Movie</Text>
             </View>
             <View style={styles.viewall}>
-              <Text style={styles.viewallText}>view all</Text>
+              <Text style={styles.viewallText} onPress={toViewAll}>
+                view all
+              </Text>
             </View>
           </View>
           <Month />
+          <MovieCardUpcoming />
         </View>
       </View>
+      <Membership />
+      <Footer />
     </ScrollView>
   );
 }

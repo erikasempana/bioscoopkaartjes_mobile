@@ -1,12 +1,33 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
 import styles from './styles';
+import axios from '../../utils/axios';
 
 import logo from '../../assets/logo/logobiosscoopkaartjes.png';
 
 export default function RegisterScreen(props) {
-  const handleRegister = () => {
-    props.navigation.navigate('Login');
+  const [form, setForm] = useState({
+    firstName: '',
+    lastName: '',
+    noTelp: '',
+    email: '',
+    password: '',
+  });
+
+  const handleRegister = async () => {
+    try {
+      console.log(form);
+      const result = await axios.post('auth/register', form);
+      console.log(result);
+      // props.navigation.navigate('Login');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleChangeForm = e => {
+    // e.target.value || e.target.name;
+    setForm({...form, [name]: text});
   };
 
   const handleLogin = () => {
@@ -25,6 +46,7 @@ export default function RegisterScreen(props) {
             <TextInput
               style={styles.input1}
               placeholder="Write your first name"
+              onChangeText={text => handleChangeForm(text, 'firstName')}
             />
           </View>
           <View>
@@ -32,6 +54,7 @@ export default function RegisterScreen(props) {
             <TextInput
               style={styles.input1}
               placeholder="Write your last name"
+              onChangeText={text => handleChangeForm(text, 'lastname')}
             />
           </View>
           <View>
@@ -39,17 +62,23 @@ export default function RegisterScreen(props) {
             <TextInput
               style={styles.input1}
               placeholder="Write your phone number"
+              onChangeText={text => handleChangeForm(text, 'noTelp')}
             />
           </View>
           <View>
             <Text style={styles.inputlabel}>Email</Text>
-            <TextInput style={styles.input1} placeholder="Write your email" />
+            <TextInput
+              style={styles.input1}
+              placeholder="Write your email"
+              onChangeText={text => handleChangeForm(text, 'email')}
+            />
           </View>
           <View>
             <Text style={styles.inputlabel2}>Password</Text>
             <TextInput
               style={styles.input2}
               placeholder="Write your password"
+              onChangeText={text => handleChangeForm(text, 'password')}
             />
           </View>
           <TouchableOpacity style={styles.button} onPress={handleRegister}>
