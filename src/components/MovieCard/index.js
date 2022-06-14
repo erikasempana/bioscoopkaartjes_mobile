@@ -5,7 +5,10 @@ import styles from './styles';
 import Moviepict from '../../assets/images/spidermenc.png';
 import {ScrollView} from 'react-native-gesture-handler';
 
-export default function MovieCard() {
+export default function MovieCard(props) {
+  const toMovieDetail = () => {
+    props.navigation.navigate('MovieDetail');
+  };
   return (
     <ScrollView horizontal={true}>
       <View style={styles.container}>
@@ -14,7 +17,7 @@ export default function MovieCard() {
           <View style={styles.content}>
             <Text style={styles.title}>Lion King</Text>
             <Text style={styles.category}>Action, Adventure, Sci-Fi</Text>
-            <TouchableOpacity style={styles.detail}>
+            <TouchableOpacity style={styles.detail} onPress={toMovieDetail}>
               <Text style={styles.detailText}>Detail</Text>
             </TouchableOpacity>
           </View>
@@ -24,7 +27,7 @@ export default function MovieCard() {
           <View style={styles.content}>
             <Text style={styles.title}>Lion King</Text>
             <Text style={styles.category}>Action, Adventure, Sci-Fi</Text>
-            <TouchableOpacity style={styles.detail}>
+            <TouchableOpacity style={styles.detail} onPress={toMovieDetail}>
               <Text style={styles.detailText}>Detail</Text>
             </TouchableOpacity>
           </View>
@@ -34,7 +37,7 @@ export default function MovieCard() {
           <View style={styles.content}>
             <Text style={styles.title}>Lion King</Text>
             <Text style={styles.category}>Action, Adventure, Sci-Fi</Text>
-            <TouchableOpacity style={styles.detail}>
+            <TouchableOpacity style={styles.detail} onPress={toMovieDetail}>
               <Text style={styles.detailText}>Detail</Text>
             </TouchableOpacity>
           </View>
@@ -44,7 +47,7 @@ export default function MovieCard() {
           <View style={styles.content}>
             <Text style={styles.title}>Lion King</Text>
             <Text style={styles.category}>Action, Adventure, Sci-Fi</Text>
-            <TouchableOpacity style={styles.detail}>
+            <TouchableOpacity style={styles.detail} onPress={toMovieDetail}>
               <Text style={styles.detailText}>Detail</Text>
             </TouchableOpacity>
           </View>
