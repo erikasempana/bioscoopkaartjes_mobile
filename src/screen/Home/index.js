@@ -37,7 +37,7 @@ export default function Home(props) {
             </View>
           </View>
         </View>
-        <MovieCard />
+        <MovieCard {...props} />
       </View>
       <View style={styles.wrapper3}>
         <View style={styles.container3}>
@@ -52,7 +52,7 @@ export default function Home(props) {
             </View>
           </View>
           <Month />
-          <MovieCardUpcoming />
+          <MovieCardUpcoming {...props} />
         </View>
       </View>
       <Membership />
