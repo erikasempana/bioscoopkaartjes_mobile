@@ -7,7 +7,10 @@ import Month from '../../components/Month';
 import Moviepict from '../../assets/images/spiderman.png';
 import Footer from '../../components/Footer';
 
-export default function ViewAll() {
+export default function ViewAll(props) {
+  const toMovieDetail = () => {
+    props.navigation.navigate('MovieDetail');
+  };
   return (
     <ScrollView>
       <View style={styles.wrapper}>
@@ -20,7 +23,7 @@ export default function ViewAll() {
               <View style={styles.content}>
                 <Text style={styles.title}>Lion King</Text>
                 <Text style={styles.category}>Action, Adventure, Sci-Fi</Text>
-                <TouchableOpacity style={styles.detail}>
+                <TouchableOpacity style={styles.detail} onPress={toMovieDetail}>
                   <Text style={styles.detailText}>Detail</Text>
                 </TouchableOpacity>
               </View>
@@ -30,7 +33,7 @@ export default function ViewAll() {
               <View style={styles.content}>
                 <Text style={styles.title}>Lion King</Text>
                 <Text style={styles.category}>Action, Adventure, Sci-Fi</Text>
-                <TouchableOpacity style={styles.detail}>
+                <TouchableOpacity style={styles.detail} onPress={toMovieDetail}>
                   <Text style={styles.detailText}>Detail</Text>
                 </TouchableOpacity>
               </View>
@@ -42,7 +45,7 @@ export default function ViewAll() {
               <View style={styles.content}>
                 <Text style={styles.title}>Lion King</Text>
                 <Text style={styles.category}>Action, Adventure, Sci-Fi</Text>
-                <TouchableOpacity style={styles.detail}>
+                <TouchableOpacity style={styles.detail} onPress={toMovieDetail}>
                   <Text style={styles.detailText}>Detail</Text>
                 </TouchableOpacity>
               </View>
@@ -52,7 +55,7 @@ export default function ViewAll() {
               <View style={styles.content}>
                 <Text style={styles.title}>Lion King</Text>
                 <Text style={styles.category}>Action, Adventure, Sci-Fi</Text>
-                <TouchableOpacity style={styles.detail}>
+                <TouchableOpacity style={styles.detail} onPress={toMovieDetail}>
                   <Text style={styles.detailText}>Detail</Text>
                 </TouchableOpacity>
               </View>
