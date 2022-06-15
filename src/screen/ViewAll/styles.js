@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   wrapper: {
-    backgroundColor: '#E5E5E5',
+    backgroundColor: '#F5F6F8',
     flex: 1,
     minHeight: 950,
   },
@@ -11,6 +11,41 @@ export default StyleSheet.create({
     paddingTop: 20,
     paddingEnd: 20,
     paddingStart: 20,
+  },
+  titileTop: {
+    fontSize: 18,
+    fontWeight: '600',
+    lineHeight: 34,
+    color: '#14142B',
+    marginTop: 20,
+  },
+  filter: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: -25,
+  },
+  sort: {
+    width: 100,
+    height: 15,
+    marginVertical: 30,
+  },
+  dropdownSort: {
+    borderColor: '#DEDEDE',
+    fontSize: 16,
+    fontWeight: '400',
+    lineHeight: 21,
+    color: '#4E4B66',
+    borderRadius: 16,
+    backgroundColor: '#FCFDFE',
+  },
+  search: {
+    width: 205,
+    height: 48,
+    backgroundColor: '#FCFDFE',
+    marginVertical: 30,
+    borderColor: '#DEDEDE',
+    borderRadius: 16,
   },
   //   card
   wrappercard: {

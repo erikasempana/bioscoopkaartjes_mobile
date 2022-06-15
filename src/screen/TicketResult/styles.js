@@ -1,3 +1,99 @@
 import {StyleSheet} from 'react-native';
 
-export default StyleSheet.create({});
+export default StyleSheet.create({
+  wrapper: {
+    backgroundColor: '#F5F6F8',
+    flex: 1,
+  },
+  container: {
+    paddingTop: 40,
+    paddingEnd: 30,
+    paddingStart: 30,
+  },
+  card: {
+    backgroundColor: '#FFF',
+    borderRadius: 16,
+    padding: 25,
+    marginBottom: 30,
+    flexWrap: 'wrap',
+    maxWidth: 320,
+  },
+  codeQr: {
+    resizeMode: 'contain',
+    width: 200,
+    height: 200,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+
+  roundWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginHorizontal: -40,
+  },
+  lineStyle1: {
+    borderWidth: 1,
+    borderColor: '#DEDEDE',
+    marginTop: 15,
+    marginBottom: 20,
+    width: 270,
+    borderStyle: 'dashed',
+  },
+  round: {
+    width: 30,
+    height: 30,
+    borderRadius: 150 / 2,
+    overflow: 'hidden',
+    borderWidth: 3,
+    borderColor: '#F5F6F8',
+    backgroundColor: '#F5F6F8',
+  },
+  wrapperDetail: {
+    paddingTop: 50,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  detail: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    paddingBottom: 20,
+  },
+  detailName: {
+    flex: 1,
+    textAlign: 'left',
+    fontSize: 12,
+    fontWeight: '600',
+    lineHeight: 22,
+    color: '#AAA',
+  },
+  detailValue: {
+    flex: 1,
+    textAlign: 'left',
+    ontSize: 14,
+    fontWeight: '600',
+    lineHeight: 26,
+    color: '#14142B',
+  },
+  detailTotal: {
+    marginTop: 20,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+    marginBottom: 10,
+    borderColor: '#DEDEDE',
+    borderWidth: 1,
+    borderRadius: 4,
+  },
+  total: {
+    textAlign: 'left',
+    ontSize: 16,
+    fontWeight: '600',
+    lineHeight: 28,
+    color: '#000',
+  },
+});

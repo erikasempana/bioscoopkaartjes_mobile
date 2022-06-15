@@ -104,7 +104,7 @@ export default StyleSheet.create({
     backgroundColor: '#EFF0F6',
     width: '100%',
     height: 48,
-    color: '4E4B66',
+    color: '#4E4B66',
     fontSize: 14,
     fontWeight: '600',
     padding: 5,
@@ -192,5 +192,23 @@ export default StyleSheet.create({
     fontSize: 14,
     lineHeight: 26,
     color: '#5F2EEA',
+  },
+
+  //
+  container3: {
+    flex: 1,
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title3: {
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+    padding: 20,
+  },
+  datePickerStyle3: {
+    width: 200,
+    marginTop: 20,
   },
 });

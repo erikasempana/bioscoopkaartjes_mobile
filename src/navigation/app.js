@@ -15,6 +15,8 @@ import Profile from '../screen/Profile';
 import MovieDetail from '../screen/MovieDetail';
 import Order from '../screen/Order';
 import Payment from '../screen/Payment';
+import TicketResult from '../screen/TicketResult';
+import OrderHistory from '../screen/OrderHistory';
 import HeaderPayment from '../components/HeaderPayment';
 import HeaderProfile from '../components/HeaderProfile';
 
@@ -37,6 +39,11 @@ function HomeNavigator() {
         options={{header: props => <HeaderProfile {...props} />}}
       />
       <Stack.Screen
+        component={OrderHistory}
+        name="OrderHistory"
+        options={{header: props => <HeaderProfile {...props} />}}
+      />
+      <Stack.Screen
         component={MovieDetail}
         name="MovieDetail"
         options={{headerShown: false}}
@@ -50,6 +57,11 @@ function HomeNavigator() {
         component={Payment}
         name="Payment"
         options={{header: props => <HeaderPayment {...props} />}}
+      />
+      <Stack.Screen
+        component={TicketResult}
+        name="TicketResult"
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );

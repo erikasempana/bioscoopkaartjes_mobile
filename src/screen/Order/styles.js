@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   wrapper: {
-    backgroundColor: '#E5E5E5',
+    backgroundColor: '#F5F6F8',
     flex: 1,
   },
   container: {
@@ -18,12 +18,24 @@ export default StyleSheet.create({
     color: '#14142B',
     paddingBottom: 20,
   },
+  card1: {
+    backgroundColor: '#FFF',
+    borderRadius: 16,
+    paddingHorizontal: 15,
+    paddingVertical: 25,
+    marginBottom: 40,
+    // maxHeight: 400,
+    // flex: 1,
+    // marginHorizontal: 16,
+  },
   card: {
     backgroundColor: '#FFF',
     borderRadius: 16,
     padding: 25,
     marginBottom: 40,
-    maxHeight: 400,
+    // maxHeight: 400,
+    // flex: 1,
+    // marginHorizontal: 16,
   },
   screenline: {
     bottom: -25,
@@ -38,9 +50,9 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
   },
   greenline: {
-    bottom: -25,
+    bottom: -5,
     borderWidth: 0.5,
-    height: 100,
+    height: 145,
     right: -2,
     borderColor: '#00BA88',
   },
@@ -51,19 +63,18 @@ export default StyleSheet.create({
     height: 100,
   },
   lineWrapper: {
-    paddingTop: 20,
     display: 'flex',
     flexDirection: 'row',
-    top: -10,
+    justifyContent: 'space-evenly',
+    top: -20,
   },
   redline: {
-    right: -5,
     bottom: -25,
     borderWidth: 0.5,
-    width: 118,
-    marginHorizontal: 10,
+    width: 120,
+    marginHorizontal: 20,
     borderColor: '#ED2E7E',
-    marginBottom: 40,
+    marginBottom: 30,
   },
   seatingKey: {
     fontSize: 16,
@@ -205,5 +216,29 @@ export default StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
     lineHeight: 28,
+  },
+  //Seat
+  container1: {
+    flex: 1,
+    marginHorizontal: 0,
+  },
+  containerSeat: {
+    backgroundColor: 'white',
+    borderRadius: 8,
+    marginTop: 45,
+    // paddingTop: 20,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  resetBox: {
+    width: 40,
+    height: 20,
+    backgroundColor: '#D6D8E7',
+    borderRadius: 4,
+    left: 20,
+    textAlign: 'center',
+    paddingHorizontal: 3,
+    paddingVertical: 2,
   },
 });
