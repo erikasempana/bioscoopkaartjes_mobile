@@ -15,6 +15,8 @@ import Profile from '../screen/Profile';
 import MovieDetail from '../screen/MovieDetail';
 import Order from '../screen/Order';
 import Payment from '../screen/Payment';
+import HeaderPayment from '../components/HeaderPayment';
+import HeaderProfile from '../components/HeaderProfile';
 
 function HomeNavigator() {
   return (
@@ -32,7 +34,7 @@ function HomeNavigator() {
       <Stack.Screen
         component={Profile}
         name="Profile"
-        options={{headerShown: false}}
+        options={{header: props => <HeaderProfile {...props} />}}
       />
       <Stack.Screen
         component={MovieDetail}
@@ -47,7 +49,7 @@ function HomeNavigator() {
       <Stack.Screen
         component={Payment}
         name="Payment"
-        options={{headerShown: false}}
+        options={{header: props => <HeaderPayment {...props} />}}
       />
     </Stack.Navigator>
   );
@@ -75,22 +77,11 @@ function ProfileNavigator() {
       <Stack.Screen
         component={Profile}
         name="Home"
-        options={{headerShown: false}}
+        options={{header: props => <HeaderProfile {...props} />}}
       />
     </Stack.Navigator>
   );
 }
-// function MovieDetailNavigator() {
-//   return (
-//     <Stack.Navigator>
-//       <Stack.Screen
-//         component={MovieDetail}
-//         name="MovieDetail"
-//         options={{headerShown: false}}
-//       />
-//     </Stack.Navigator>
-//   );
-// }
 
 export default function AppNavigator() {
   return (
@@ -131,6 +122,17 @@ export default function AppNavigator() {
           },
         }}
       />
+      {/* <Drawer.Screen
+        component={PaymentNavigator}
+        name="PaymentNavigator"
+        options={{
+          title: 'Payment',
+          header: props => <HeaderVersi2 {...props} />,
+          drawerIcon: ({size, color}) => {
+            <Icon name="user" size={size} color={color} />;
+          },
+        }}
+      /> */}
     </Drawer.Navigator>
   );
 }
