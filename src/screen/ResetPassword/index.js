@@ -21,6 +21,7 @@ export default function ResetPassword(props) {
           <View>
             <Text style={styles.inputlabel}>Password</Text>
             <TextInput
+              secureTextEntry={true}
               style={styles.input1}
               placeholder="Write your password"
             />
@@ -28,6 +29,7 @@ export default function ResetPassword(props) {
           <View>
             <Text style={styles.inputlabel}>Confirm Password</Text>
             <TextInput
+              secureTextEntry={true}
               style={styles.input1}
               placeholder="Write your confirm password"
             />
