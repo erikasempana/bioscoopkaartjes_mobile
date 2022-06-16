@@ -98,9 +98,14 @@ export default function ViewAll(props) {
               </View>
             </View>
           </View>
+          <View style={styles.viewMoreWrapper}>
+            <View style={styles.viewMoreLine} />
+            <Text style={styles.viewMoreText}>View More</Text>
+            <View style={styles.viewMoreLine} />
+          </View>
         </View>
       </View>
-      <Footer />
+      <Footer {...props} />
     </ScrollView>
   );
 }
