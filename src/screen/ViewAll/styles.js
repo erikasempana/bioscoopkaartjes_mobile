@@ -101,4 +101,26 @@ export default StyleSheet.create({
     margin: 5,
     color: '#5F2EEA',
   },
+  viewMoreWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    paddingVertical: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  viewMoreLine: {
+    borderWidth: 0.5,
+    borderColor: '#DEDEDE',
+    width: '35%',
+    height: 1,
+    bottom: -3,
+  },
+  viewMoreText: {
+    alignSelf: 'center',
+    marginHorizontal: 15,
+    fontWeight: '600',
+    fontSize: 14,
+    lineHeight: 26,
+    color: '#5F2EEA',
+  },
 });
