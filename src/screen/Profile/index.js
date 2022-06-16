@@ -71,7 +71,7 @@ export default function Profile(props) {
           </TouchableOpacity>
         </View>
       </View>
-      <Footer />
+      <Footer {...props} />
     </ScrollView>
   );
 }
