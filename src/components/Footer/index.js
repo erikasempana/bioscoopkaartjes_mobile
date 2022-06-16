@@ -10,7 +10,14 @@ import Instagram from '../../assets/images/instagram.png';
 import Twitter from '../../assets/images/twitter.png';
 import Youtube from '../../assets/images/youtube.png';
 
-export default function Footer() {
+export default function Footer(props) {
+  // console.log('first', props);
+  const handleViewAll = () => {
+    props.navigation.navigate('ViewAll');
+  };
+  const handleHome = () => {
+    props.navigation.navigate('Home');
+  };
   return (
     <View style={styles.container}>
       <View style={styles.logowrapper}>
@@ -22,8 +29,10 @@ export default function Footer() {
       <View style={styles.wrapper}>
         <Text style={styles.sub}>Explore</Text>
         <View style={styles.explorelist}>
-          <Text style={{paddingEnd: 20}}>Home</Text>
-          <Text>List Movie</Text>
+          <Text style={{paddingEnd: 20}} onPress={handleHome}>
+            Home
+          </Text>
+          <Text onPress={handleViewAll}>List Movie</Text>
         </View>
       </View>
       <View style={styles.wrapper}>
