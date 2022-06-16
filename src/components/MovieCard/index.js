@@ -1,9 +1,9 @@
 import React from 'react';
 import {Image, View, Text, TouchableOpacity} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import styles from './styles';
 
 import Moviepict from '../../assets/images/spidermenc.png';
-import {ScrollView} from 'react-native-gesture-handler';
 
 export default function MovieCard(props) {
   const toMovieDetail = () => {
