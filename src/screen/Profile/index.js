@@ -12,7 +12,18 @@ import styles from './styles';
 import User from '../../assets/images/user1.jpg';
 import Footer from '../../components/Footer';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export default function Profile(props) {
+  const handleLogout = async () => {
+    try {
+      alert('Logout');
+      await AsyncStorage.clear();
+      props.navigation.navigate('AuthScreen', {
+        screen: 'Login',
+      });
+    } catch (error) {}
+  };
   return (
     <ScrollView>
       <View style={styles.wrapper}>
@@ -24,7 +35,9 @@ export default function Profile(props) {
             <Text style={styles.userDetail}>Moviegoers</Text>
             <View style={styles.lineStyle} />
             <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>Logout</Text>
+              <Text style={styles.buttonText} onPress={handleLogout}>
+                Logout
+              </Text>
             </TouchableOpacity>
           </View>
           <Text style={styles.titleMenu}>Account Settings</Text>
@@ -59,11 +72,19 @@ export default function Profile(props) {
             <View style={styles.lineStyle1} />
             <View style={styles.inputWrapper}>
               <Text style={styles.inputlabel}>New Password</Text>
-              <TextInput style={styles.input} placeholder="••••••••••" />
+              <TextInput
+                secureTextEntry={true}
+                style={styles.input}
+                placeholder="••••••••••"
+              />
             </View>
             <View style={styles.inputWrapper}>
               <Text style={styles.inputlabel}>New Password</Text>
-              <TextInput style={styles.input} placeholder="••••••••••" />
+              <TextInput
+                secureTextEntry={true}
+                style={styles.input}
+                placeholder="••••••••••"
+              />
             </View>
           </View>
           <TouchableOpacity style={styles.buttonUpdate}>

@@ -73,7 +73,7 @@ export default StyleSheet.create({
   detailValue: {
     flex: 1,
     textAlign: 'left',
-    ontSize: 14,
+    fontSize: 14,
     fontWeight: '600',
     lineHeight: 26,
     color: '#14142B',
@@ -91,7 +91,7 @@ export default StyleSheet.create({
   },
   total: {
     textAlign: 'left',
-    ontSize: 16,
+    fontSize: 16,
     fontWeight: '600',
     lineHeight: 28,
     color: '#000',

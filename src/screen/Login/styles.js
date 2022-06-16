@@ -9,6 +9,7 @@ export default StyleSheet.create({
     paddingTop: 50,
     paddingEnd: 20,
     paddingStart: 20,
+    minHeight: 650,
   },
   logo: {
     resizeMode: 'contain',

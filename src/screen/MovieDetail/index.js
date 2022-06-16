@@ -15,8 +15,8 @@ import IconEntypo from 'react-native-vector-icons/Entypo';
 import Footer from '../../components/Footer';
 
 // Select Dropdown
-import SelectDropdown from 'react-native-select-dropdown';
-const location = ['Jakarta', 'Bandung', 'Bogor', 'Bekasi', 'Depok'];
+// import SelectDropdown from 'react-native-select-dropdown';
+// const location = ['Jakarta', 'Bandung', 'Bogor', 'Bekasi', 'Depok'];
 
 import Spiderman from '../../assets/images/spiderman.png';
 import Ebuid from '../../assets/images/ebuid.png';
@@ -80,7 +80,7 @@ export default function MovieDetail(props) {
             placeholder="Set a date"
           />
 
-          <SelectDropdown
+          {/* <SelectDropdown
             label="Select a city"
             style={styles.dropdown}
             data={location}
@@ -97,7 +97,7 @@ export default function MovieDetail(props) {
               // if data array is an array of objects then return item.property to represent item in dropdown
               return item;
             }}
-          />
+          /> */}
           <TextInput
             icon={({color, size}) => (
               <IconEntypo color={color} size={size} name="location" />

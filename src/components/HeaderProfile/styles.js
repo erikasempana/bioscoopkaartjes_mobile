@@ -5,13 +5,13 @@ export default StyleSheet.create({
     backgroundColor: '#E5E5E5',
   },
   card: {
-    marginTop: -30,
+    marginTop: -20,
     backgroundColor: '#FFF',
     borderRadius: 16,
     paddingVertical: 30,
     paddingHorizontal: 20,
     borderColor: 'rgba(186, 186, 186, 0.08)',
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
 
     elevation: 5,
   },
@@ -21,14 +21,6 @@ export default StyleSheet.create({
     // justifyContent: 'space-between',
   },
   underline1: {
-    marginTop: -20,
-    marginBottom: -30,
-    paddingTop: 30,
-    width: 120,
-    height: 70,
-    marginHorizontal: 20,
-  },
-  underline2: {
     marginTop: -20,
     marginBottom: -30,
     paddingTop: 30,
@@ -46,16 +38,6 @@ export default StyleSheet.create({
     marginHorizontal: 20,
     borderBottomColor: '#5F2EEA',
   },
-  underlineActive2: {
-    marginTop: -20,
-    marginBottom: -30,
-    paddingTop: 30,
-    width: 120,
-    height: 70,
-    borderBottomWidth: 2,
-    marginHorizontal: 20,
-    borderBottomColor: '#5F2EEA',
-  },
   headerMenu: {
     flex: 1,
     fontSize: 14,
@@ -64,6 +46,7 @@ export default StyleSheet.create({
     color: '#AAA',
     textAlign: 'center',
     bottom: -10,
+    paddingBottom: 15,
   },
   headerMenuActive: {
     flex: 1,
