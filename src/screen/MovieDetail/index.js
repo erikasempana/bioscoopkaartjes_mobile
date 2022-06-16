@@ -14,32 +14,14 @@ import Icon from 'react-native-vector-icons/Feather';
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import Footer from '../../components/Footer';
 
-// Date Picker
-import DatePicker from 'react-native-date-picker';
-
-// Dropdown Picker
-import DropDownPicker from 'react-native-dropdown-picker';
-
 // Select Dropdown
 import SelectDropdown from 'react-native-select-dropdown';
-const countries = ['Egypt', 'Canada', 'Australia', 'Ireland'];
+const location = ['Jakarta', 'Bandung', 'Bogor', 'Bekasi', 'Depok'];
 
 import Spiderman from '../../assets/images/spiderman.png';
 import Ebuid from '../../assets/images/ebuid.png';
 
 export default function MovieDetail(props) {
-  // Date Picker
-  // const [date, setDate] = useState(new Date());
-  const [openDate, setOpenDate] = useState(false);
-  const [date, setDate] = useState('09-10-2020');
-
-  // Dropdown Picker
-  const [openDropdown, setOpenDropdown] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    {label: 'Apple', value: 'apple'},
-    {label: 'Banana', value: 'banana'},
-  ]);
   const toOrderPage = () => {
     props.navigation.navigate('Order');
   };
@@ -90,38 +72,18 @@ export default function MovieDetail(props) {
         </View>
         <View style={styles.wrapperShowTime}>
           <Text style={styles.showtimeTitle}>Showtimes and Tickets</Text>
-
-          {/* Date Picker */}
-
-          <Button title="Pick Date" onPress={() => setOpenDate(true)} />
-          <DatePicker
-            modal
-            open={openDate}
-            date={date}
-            onConfirm={datePick => {
-              setOpenDate(false);
-              setDate(datePick);
-            }}
-            onCancel={() => {
-              setOpenDate(false);
-            }}
+          <TextInput
+            icon={({color, size}) => (
+              <Icon color={color} size={12} name="calendar" />
+            )}
+            style={styles.input}
+            placeholder="Set a date"
           />
-          {/* End Date Picker */}
 
-          {/* Dropdown Picker */}
-          <DropDownPicker
-            open={openDropdown}
-            value={value}
-            items={items}
-            setOpen={setOpenDropdown}
-            setValue={setValue}
-            setItems={setItems}
-          />
-          {/* End Dropdown Picker */}
-
-          {/* Select Dropdown */}
           <SelectDropdown
-            data={countries}
+            label="Select a city"
+            style={styles.dropdown}
+            data={location}
             onSelect={(selectedItem, index) => {
               console.log(selectedItem, index);
             }}
@@ -136,16 +98,6 @@ export default function MovieDetail(props) {
               return item;
             }}
           />
-          {/* End Select Dropdown */}
-
-          <TextInput
-            icon={({color, size}) => (
-              <Icon color={color} size={12} name="calendar" />
-            )}
-            style={styles.input}
-            placeholder="Set a date"
-          />
-
           <TextInput
             icon={({color, size}) => (
               <IconEntypo color={color} size={size} name="location" />
@@ -208,7 +160,7 @@ export default function MovieDetail(props) {
           </View>
         </View>
       </View>
-      <Footer />
+      <Footer {...props} />
     </ScrollView>
   );
 }
