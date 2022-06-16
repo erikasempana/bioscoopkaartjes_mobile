@@ -56,7 +56,7 @@ export default function Home(props) {
         </View>
       </View>
       <Membership />
-      <Footer />
+      <Footer {...props} />
     </ScrollView>
   );
 }
