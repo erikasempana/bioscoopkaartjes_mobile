@@ -19,7 +19,7 @@ import Paypal from '../../assets/images/paypal.png';
 import Ovo from '../../assets/images/OVO.png';
 import Dana from '../../assets/images/DANA.png';
 
-export default function Payment() {
+export default function Payment(props) {
   return (
     <ScrollView>
       <View style={styles.wrapper}>
@@ -88,7 +88,7 @@ export default function Payment() {
           </TouchableOpacity>
         </View>
       </View>
-      <Footer />
+      <Footer {...props} />
     </ScrollView>
   );
 }
