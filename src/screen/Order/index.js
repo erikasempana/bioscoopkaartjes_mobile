@@ -133,7 +133,7 @@ export default function Order(props) {
           </TouchableOpacity>
         </View>
       </View>
-      <Footer />
+      <Footer {...props} />
     </ScrollView>
   );
 }
