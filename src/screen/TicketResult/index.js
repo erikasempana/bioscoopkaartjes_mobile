@@ -56,7 +56,7 @@ export default function TicketResult(props) {
           </View>
         </View>
       </View>
-      <Footer />
+      <Footer {...props} />
     </ScrollView>
   );
 }
