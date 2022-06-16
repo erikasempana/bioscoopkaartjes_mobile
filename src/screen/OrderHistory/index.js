@@ -37,7 +37,7 @@ export default function OrderHistory(props) {
           </View>
         </View>
       </View>
-      <Footer />
+      <Footer {...props} />
     </ScrollView>
   );
 }
