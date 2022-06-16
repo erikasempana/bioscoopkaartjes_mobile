@@ -9,11 +9,14 @@ export default function Header(props) {
   const openDrawer = () => {
     props.navigation.openDrawer();
   };
+  const handleHomeLogo = () => {
+    props.navigation.navigate('Home');
+  };
   return (
     <View style={styles.header}>
-      <View style={{flex: 1}}>
+      <TouchableOpacity style={{flex: 1}} onPress={handleHomeLogo}>
         <Image style={styles.logo} source={Logo} />
-      </View>
+      </TouchableOpacity>
       <TouchableOpacity onPress={openDrawer}>
         <Image style={styles.iconbar} source={Iconbar} />
       </TouchableOpacity>
