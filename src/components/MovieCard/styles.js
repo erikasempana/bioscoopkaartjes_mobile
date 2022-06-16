@@ -37,7 +37,10 @@ export default StyleSheet.create({
     minHeight: 30,
   },
   category: {
-    marginTop: 10,
+    fontSize: 11,
+    fontWeight: '300',
+    marginVertical: 5,
+    color: '#A0A3BD',
     textAlign: 'center',
     lineHeight: 13.75,
     minHeight: 30,
