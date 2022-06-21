@@ -2,8 +2,9 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const axiosApiIntances = axios.create({
-  //   baseURL: 'HTTP://192.168:3001', // untuk lokal ip:portbackend (di config)
-  baseURL: 'https://project-tickitz.herokuapp.com/',
+  // baseURL: 'http://192.168.43.230:3001', // untuk lokal ip:portbackend (di config)
+  // baseURL: 'https://project-tickitz.herokuapp.com/',
+  baseURL: 'https://bioscoopkaartjes.herokuapp.com/',
 });
 
 // Add a request interceptor
@@ -33,7 +34,7 @@ axiosApiIntances.interceptors.response.use(
     const refreshToken = await AsyncStorage.getItem('refreshToken');
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
-    if (error.response === 403) {
+    if (error.response.status === 403) {
       if (error.response.data.msg === 'jwt expired') {
         axiosApiIntances
           .post('auth/refresh', {refreshToken})
@@ -45,11 +46,8 @@ axiosApiIntances.interceptors.response.use(
             );
           })
           .catch(async err => {
-            await AsyncStorage.setItem('token', res.data.data.token);
-            await AsyncStorage.setItem(
-              'refreshToken',
-              res.data.data.refreshToken,
-            );
+            await AsyncStorage.removeItem('token');
+            await AsyncStorage.removeItem('refreshToken');
           });
       } else {
         await AsyncStorage.removeItem('token');

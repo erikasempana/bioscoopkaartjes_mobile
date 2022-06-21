@@ -51,9 +51,9 @@ export default function Home(props) {
               </Text>
             </View>
           </View>
-          <Month />
-          <MovieCardUpcoming {...props} />
         </View>
+        <Month />
+        <MovieCardUpcoming {...props} />
       </View>
       <Membership />
       <Footer {...props} />

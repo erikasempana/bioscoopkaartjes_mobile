@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styles from './styles';
-import {Text, TouchableHighlight, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 
 export default function Month(props) {
-  const monthList = [
+  const [sortMonth, setSortMonth] = useState('');
+  const [monthList, setMonthList] = useState([
     {id: 1, month: 'January'},
     {id: 2, month: 'February'},
     {id: 3, month: 'March'},
@@ -17,45 +18,39 @@ export default function Month(props) {
     {id: 10, month: 'October'},
     {id: 11, month: 'November'},
     {id: 12, month: 'December'},
-  ];
+  ]);
 
-  var [isPress, setIsPress] = React.useState(false);
   var touchButton = {
     activeOpacity: 1,
     underlayColor: '#5F2EEA',
-    style: isPress ? styles.monthButtonPress : styles.monthButtonNormal, // <-- but you can still apply other style changes
-    onHideUnderlay: () => setIsPress(false),
-    onShowUnderlay: () => setIsPress(true),
-    // onPress: () => console.log('HELLO'), // <-- "onPress" is apparently required
   };
-  var touchText = {
-    style: isPress ? styles.monthTextPress : styles.monthTextNormal, // <-- but you can still apply other style changes
-    onHideUnderlay: () => setIsPress(false),
-    onShowUnderlay: () => setIsPress(true),
-  };
-
-  const handlePressButton = () => {
-    if (isPress === true) {
-      touchButton;
-    }
-  };
-
-  const handlePressText = () => {
-    touchText;
+  const handlePressButton = item => {
+    setSortMonth(item.id);
+    console.log(item);
   };
 
   return (
     <ScrollView horizontal={true}>
       <View style={styles.container}>
-        {monthList.map(item => (
-          <TouchableHighlight
+        {monthList.map((item, idx) => (
+          <TouchableOpacity
             {...touchButton}
             key={item.id}
-            onPress={handlePressButton}>
-            <Text {...touchText} onPress={handlePressText}>
+            onPress={() => handlePressButton(item, idx)}
+            style={[
+              item.id === sortMonth
+                ? styles.monthButtonPress
+                : styles.monthButtonNormal,
+            ]}>
+            <Text
+              style={[
+                item.id === sortMonth
+                  ? styles.monthTextPress
+                  : styles.monthTextNormal,
+              ]}>
               {item.month}
             </Text>
-          </TouchableHighlight>
+          </TouchableOpacity>
         ))}
       </View>
     </ScrollView>

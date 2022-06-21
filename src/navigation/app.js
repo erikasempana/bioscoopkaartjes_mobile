@@ -19,6 +19,8 @@ import TicketResult from '../screen/TicketResult';
 import OrderHistory from '../screen/OrderHistory';
 import HeaderPayment from '../components/HeaderPayment';
 import HeaderProfile from '../components/HeaderProfile';
+import Counter from '../screen/Counter';
+import ListMovie from '../screen/ListMovie';
 
 function HomeNavigator() {
   return (
@@ -63,6 +65,16 @@ function HomeNavigator() {
         name="TicketResult"
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        component={Counter}
+        name="Counter"
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={ListMovie}
+        name="ListMovie"
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 }
@@ -90,6 +102,28 @@ function ProfileNavigator() {
         component={Profile}
         name="Home"
         options={{header: props => <HeaderProfile {...props} />}}
+      />
+    </Stack.Navigator>
+  );
+}
+function CounterNavigator() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        component={Counter}
+        name="Counter"
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
+  );
+}
+function ListMovieNavigator() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        component={ListMovie}
+        name="ListMovie"
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );
@@ -134,17 +168,28 @@ export default function AppNavigator() {
           },
         }}
       />
-      {/* <Drawer.Screen
-        component={PaymentNavigator}
-        name="PaymentNavigator"
+      <Drawer.Screen
+        component={CounterNavigator}
+        name="CounterNavigator"
         options={{
-          title: 'Payment',
-          header: props => <HeaderVersi2 {...props} />,
+          title: 'Counter',
+          header: props => <Header {...props} />,
           drawerIcon: ({size, color}) => {
             <Icon name="user" size={size} color={color} />;
           },
         }}
-      /> */}
+      />
+      <Drawer.Screen
+        component={ListMovieNavigator}
+        name="ListMovieNavigator"
+        options={{
+          title: 'ListMovie',
+          header: props => <Header {...props} />,
+          drawerIcon: ({size, color}) => {
+            <Icon name="user" size={size} color={color} />;
+          },
+        }}
+      />
     </Drawer.Navigator>
   );
 }

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  ToastAndroid,
 } from 'react-native';
 import styles from './styles';
 import axios from '../../utils/axios';
@@ -13,6 +14,9 @@ import axios from '../../utils/axios';
 import logo from '../../assets/logo/logobiosscoopkaartjes.png';
 
 export default function RegisterScreen(props) {
+  const [message, setMessage] = useState('');
+  const [isError, setIsError] = useState(false);
+
   const [form, setForm] = useState({
     firstName: '',
     lastName: '',
@@ -24,18 +28,27 @@ export default function RegisterScreen(props) {
   const handleRegister = async () => {
     try {
       // console.log(form);
-      // const result = await axios.post('auth/register', form);
-      // console.log(result);
+      const result = await axios.post('auth/register', form);
+      // console.log('result', result.data);
+      ToastAndroid.show('succes register', ToastAndroid.SHORT);
       props.navigation.navigate('Login');
     } catch (error) {
       console.log(error);
+      ToastAndroid.show(error.response.data.msg, ToastAndroid.SHORT);
+      setForm({
+        firstName: '',
+        lastName: '',
+        noTelp: '',
+        email: '',
+        password: '',
+      });
     }
   };
 
-  // const handleChangeForm = e => {
-  //   // e.target.value || e.target.name;
-  //   setForm({...form, [name]: text});
-  // };
+  const handleChangeForm = (text, name) => {
+    // e.target.value || e.target.name;
+    setForm({...form, [name]: text});
+  };
 
   const handleLogin = () => {
     props.navigation.navigate('Login');
@@ -54,7 +67,7 @@ export default function RegisterScreen(props) {
               <TextInput
                 style={styles.input1}
                 placeholder="Write your first name"
-                // onChangeText={text => handleChangeForm(text, 'firstName')}
+                onChangeText={text => handleChangeForm(text, 'firstName')}
               />
             </View>
             <View>
@@ -62,7 +75,7 @@ export default function RegisterScreen(props) {
               <TextInput
                 style={styles.input1}
                 placeholder="Write your last name"
-                // onChangeText={text => handleChangeForm(text, 'lastname')}
+                onChangeText={text => handleChangeForm(text, 'lastname')}
               />
             </View>
             <View>
@@ -70,7 +83,7 @@ export default function RegisterScreen(props) {
               <TextInput
                 style={styles.input1}
                 placeholder="Write your phone number"
-                // onChangeText={text => handleChangeForm(text, 'noTelp')}
+                onChangeText={text => handleChangeForm(text, 'noTelp')}
               />
             </View>
             <View>
@@ -78,7 +91,7 @@ export default function RegisterScreen(props) {
               <TextInput
                 style={styles.input1}
                 placeholder="Write your email"
-                // onChangeText={text => handleChangeForm(text, 'email')}
+                onChangeText={text => handleChangeForm(text, 'email')}
               />
             </View>
             <View>
@@ -87,7 +100,7 @@ export default function RegisterScreen(props) {
                 secureTextEntry={true}
                 style={styles.input2}
                 placeholder="Write your password"
-                // onChangeText={text => handleChangeForm(text, 'password')}
+                onChangeText={text => handleChangeForm(text, 'password')}
               />
             </View>
             <TouchableOpacity style={styles.button} onPress={handleRegister}>

@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useSelector} from 'react-redux';
 import {
   Button,
   Image,
@@ -22,6 +23,9 @@ import Spiderman from '../../assets/images/spiderman.png';
 import Ebuid from '../../assets/images/ebuid.png';
 
 export default function MovieDetail(props) {
+  // const MovieDetail = useSelector(state => state.movie.data);
+  // console.log(MovieDetail);
+
   const toOrderPage = () => {
     props.navigation.navigate('Order');
   };
