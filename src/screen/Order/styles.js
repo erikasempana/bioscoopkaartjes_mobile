@@ -139,9 +139,11 @@ export default StyleSheet.create({
   },
   cinema: {
     bottom: -25,
-    resizeMode: 'contain',
-    height: 20,
+    fontSize: 45,
+    fontWeight: '800',
+    height: 60,
     alignSelf: 'center',
+    color: '#5F2EEA',
   },
   cinemaName: {
     fontSize: 24,
@@ -196,7 +198,7 @@ export default StyleSheet.create({
   },
   totalValue: {
     textAlign: 'right',
-    flex: 1,
+    flex: 4,
     fontSize: 24,
     fontWeight: '700',
     lineHeight: 30,

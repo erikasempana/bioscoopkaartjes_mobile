@@ -78,9 +78,10 @@ export default StyleSheet.create({
     resizeMode: 'contain',
     width: 122,
     top: -90,
+    height: '100%',
   },
   content: {
-    top: 185,
+    top: -165,
     marginRight: 20,
     marginLeft: 20,
     marginBottom: 20,

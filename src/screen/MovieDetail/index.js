@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {dataOrder, getAllSchedule} from '../../stores/actions/schedule';
+import {getMovieById} from '../../stores/actions/movie';
 import {
-  ActivityIndicator,
-  FlatList,
+  dataOrder,
+  getScheduleById,
+  getScheduleByMovieId,
+} from '../../stores/actions/schedule';
+import {
   Image,
   Text,
   TextInput,
@@ -16,11 +19,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import Footer from '../../components/Footer';
 
-// import Spiderman from '../../assets/images/spiderman.png';
-import Ebuid from '../../assets/images/ebuid.png';
-import {getMovieById} from '../../stores/actions/movie';
-import {ItemClick} from 'native-base/lib/typescript/components/composites/Typeahead/useTypeahead/types';
-('');
+import DefaultPict from '../../assets/images/default.png';
 
 // Select Dropdown
 // import SelectDropdown from 'react-native-select-dropdown';
@@ -30,9 +29,8 @@ export default function MovieDetail(props) {
   const id = props.route.params.id;
   const dispatch = useDispatch();
   const detailMovie = useSelector(state => state.movie.data);
-  // const scheduleMovie = useSelector(state => state.schedule.data);
+  const scheduleMovie2 = useSelector(state => state.scheduleByMovieId.data);
   const [scheduleMovie, setScheduleMovie] = useState([]);
-  console.log('movieSchedule', scheduleMovie);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(8);
   const [refresh, setRefresh] = useState(false);
@@ -57,14 +55,12 @@ export default function MovieDetail(props) {
 
   const changeDataBooking = data => {
     setDataDetailOrder({...dataDetailOrder, ...data});
+    console.log('TOUCH BY YOU', data);
   };
 
   const getDetailMovie = async () => {
     try {
-      console.log(id);
-      const resultSchedulelMovie = await dispatch(getMovieById(id));
-      // console.log('detaill', resultDetailMovie);
-      setScheduleMovie(resultSchedulelMovie.action.payload.data.data);
+      await dispatch(getMovieById(id));
     } catch (error) {
       console.log(error.response);
     }
@@ -72,8 +68,9 @@ export default function MovieDetail(props) {
 
   const getScheduleMovie = async () => {
     try {
-      const page = 1;
-      await dispatch(getAllSchedule(page));
+      const movieId = id;
+      const result = await dispatch(getScheduleByMovieId(movieId));
+      setScheduleMovie(result.action.payload.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -135,20 +132,52 @@ export default function MovieDetail(props) {
 
   // console.log(props);
 
-  const rupiah = number => {
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-    }).format(number);
+  const convertToRupiah = angka => {
+    var rupiah = '';
+    var angkarev = angka.toString().split('').reverse().join('');
+    for (var i = 0; i < angkarev.length; i++) {
+      if (i % 3 === 0) {
+        rupiah += angkarev.substr(i, 3) + '.';
+      }
+    }
+    return (
+      'Rp ' +
+      rupiah
+        .split('', rupiah.length - 1)
+        .reverse()
+        .join('')
+    );
   };
 
-  const handleBookNow = price => {
-    const body = {
-      ...dataDetailOrder,
-      price,
-    };
-    dispatch(dataOrder(body));
-    props.navigation.navigate('Order');
+  const tConvert = time => {
+    // Check correct time format and split into components
+    time = time
+      .toString()
+      .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+    if (time.length > 1) {
+      // If time format correct
+      time = time.slice(1); // Remove full string match value
+      time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
+      time[0] = +time[0] % 12 || 12; // Adjust hours
+    }
+    return time.join(''); // return adjusted time or original string
+  };
+
+  const handleBookNow = async price => {
+    try {
+      const body = {
+        ...dataDetailOrder,
+        price,
+      };
+      console.log('price', dataDetailOrder);
+      const scheduleId = dataDetailOrder.scheduleId;
+      await dispatch(dataOrder(body));
+      await dispatch(getScheduleById(scheduleId));
+      props.navigation.replace('Order', {movieId: id, price, scheduleId});
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const ListHeader = () => {
@@ -169,8 +198,8 @@ export default function MovieDetail(props) {
           <View style={styles.left}>
             <Text style={styles.name}>Release date</Text>
             <Text style={styles.value}>
-              {/* <Moment format="MMMM DD YYYY">{detailMovie.releaseDate}</Moment> */}
-              {detailMovie.releaseDate.split('T')[0]}
+              {/* {detailMovie.releaseDate.split('T')[0]} */}
+              {detailMovie.releaseDate}
             </Text>
           </View>
           <View style={styles.right}>
@@ -219,27 +248,28 @@ export default function MovieDetail(props) {
       <View style={styles.wrapper}>
         <View style={styles.container}>
           <ListHeader />
-          {scheduleMovie.map(el => (
-            <View key={el.id} style={styles.scheduleCard}>
-              <Image style={styles.cinema} source={Ebuid} />
-              <Text style={styles.cinemaLocation}>{el.location}</Text>
-              <View style={styles.lineStyle} />
-              <View style={styles.timeWrapper}>
-                {/* {el.time.split(',')[0].map(itemTime => (
-                  <TouchableOpacity
-                    key={itemTime}
-                    style={styles.time}
-                    onPress={() =>
-                      changeDataBooking({
-                        timeBooking: itemTime,
-                        scheduleId: el.id,
-                      })
-                    }>
-                    {itemTime}
-                  </TouchableOpacity>
-                ))} */}
-                {el.time}
-                {/* <FlatList
+          <View style={styles.wrapperShowTime}>
+            {scheduleMovie2.map(el => (
+              <View key={el.id} style={styles.scheduleCard}>
+                <Text style={styles.cinema}>{el.premiere}</Text>
+                <Text style={styles.cinemaLocation}>{el.location}</Text>
+                <View style={styles.lineStyle} />
+                <View style={styles.timeWrapper}>
+                  {el.time.split(', ').map(itemTime => (
+                    <TouchableOpacity
+                      key={itemTime}
+                      onPress={() =>
+                        changeDataBooking({
+                          timeBooking: itemTime,
+                          scheduleId: el.id,
+                          // premiere:
+                        })
+                      }>
+                      <Text style={styles.time}>{tConvert(itemTime)}</Text>
+                    </TouchableOpacity>
+                  ))}
+                  {/* {el.time} */}
+                  {/* <FlatList
                 data={el.time.split(',')}
                 keyExtractor={itemTime => itemTime}
                 renderItem={({itemTime}) => (
@@ -255,28 +285,23 @@ export default function MovieDetail(props) {
                   </TouchableOpacity>
                 )}
               /> */}
-                <Text style={styles.time}>08:30am</Text>
-                <Text style={styles.time}>08:30am</Text>
-                <Text style={styles.time}>08:30am</Text>
-                <Text style={styles.time}>08:30am</Text>
-                <Text style={styles.time}>08:30am</Text>
-                <Text style={styles.time}>08:30am</Text>
-                <Text style={styles.time}>08:30am</Text>
-                <Text style={styles.time}>08:30am</Text>
+                </View>
+                <View style={styles.priceWrapper}>
+                  <Text style={styles.priceName}>Price</Text>
+                  {/* <Text style={styles.priceValue}>{rupiah(el.price)}/seat</Text> */}
+                  <Text style={styles.priceValue}>
+                    {convertToRupiah(el.price)}/seat
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => handleBookNow(el.price)}>
+                  <Text style={styles.buttonText}>Book now</Text>
+                </TouchableOpacity>
               </View>
-              <View style={styles.priceWrapper}>
-                <Text style={styles.priceName}>Price</Text>
-                {/* <Text style={styles.priceValue}>{rupiah(el.price)}/seat</Text> */}
-                <Text style={styles.priceValue}>{el.price}/seat</Text>
-              </View>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => handleBookNow(el.price)}>
-                <Text style={styles.buttonText}>Book now</Text>
-              </TouchableOpacity>
-            </View>
-          ))}
-          {/* <FlatList
+            ))}
+
+            {/* <FlatList
           data={scheduleMovie}
           ListHeaderComponent={ListHeader}
           keyExtractor={el => el.id}
@@ -341,10 +366,11 @@ export default function MovieDetail(props) {
             ) : null
           }
         /> */}
-          <View style={styles.viewMoreWrapper}>
-            <View style={styles.viewMoreLine} />
-            <Text style={styles.viewMoreText}>no more data</Text>
-            <View style={styles.viewMoreLine} />
+            <View style={styles.viewMoreWrapper}>
+              <View style={styles.viewMoreLine} />
+              <Text style={styles.viewMoreText}>no more data</Text>
+              <View style={styles.viewMoreLine} />
+            </View>
           </View>
         </View>
       </View>

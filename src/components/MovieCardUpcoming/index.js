@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {ScrollView} from 'react-native-gesture-handler';
 import {GetMovieUpcoming} from '../../stores/actions/movie';
 
-import Moviepict from '../../assets/images/spidermenc.png';
+import Moviepict from '../../assets/images/default.png';
 
 export default function MovieCard(props) {
   const dispatch = useDispatch();
@@ -33,24 +33,24 @@ export default function MovieCard(props) {
   return (
     <ScrollView horizontal={true}>
       <View style={styles.container}>
-        {upComingMovie.map(item => (
-          <View key={item.id} style={styles.card}>
+        {upComingMovie.map(el => (
+          <View key={el.id} style={styles.card}>
             <Image
               style={styles.imagepic}
               source={
-                item.image
+                el.image
                   ? {
-                      uri: `https://res.cloudinary.com/erikasempana/image/upload/v1655692721/${item.image}`,
+                      uri: `https://res.cloudinary.com/erikasempana/image/upload/v1655692721/${el.image}`,
                     }
                   : Moviepict
               }
             />
             <View style={styles.content}>
-              <Text style={styles.title}>{item.name}</Text>
-              <Text style={styles.category}>{item.category}</Text>
+              <Text style={styles.title}>{el.name}</Text>
+              <Text style={styles.category}>{el.category}</Text>
               <TouchableOpacity
                 style={styles.detail}
-                onPress={() => toMovieDetail(item)}>
+                onPress={() => toMovieDetail(el)}>
                 <Text style={styles.detailText}>Detail</Text>
               </TouchableOpacity>
             </View>

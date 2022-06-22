@@ -23,8 +23,10 @@ export default StyleSheet.create({
     resizeMode: 'contain',
     width: 122,
     height: '100%',
+    top: -80,
   },
   content: {
+    top: -165,
     marginRight: 20,
     marginLeft: 20,
     marginBottom: 20,

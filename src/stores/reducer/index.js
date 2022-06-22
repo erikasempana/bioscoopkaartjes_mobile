@@ -8,6 +8,9 @@ import movieNowShowing from './movieNowShowing';
 import movieUpcoming from './movieUpcoming';
 import schedule from './schedule';
 import dataOrder from './dataOrder';
+import scheduleByMovieId from './scheduleByMovieId';
+import scheduleById from './getScheduleById';
+import booking from './booking';
 
 export default combineReducers({
   counter,
@@ -18,4 +21,7 @@ export default combineReducers({
   movieUpcoming,
   schedule,
   dataOrder,
+  scheduleByMovieId,
+  scheduleById,
+  booking,
 });

@@ -98,9 +98,10 @@ export default function ViewAll(props) {
   };
 
   const toMovieDetail = item => {
-    setSelectMovie(item.id);
-    // console.log('item', item.id);
-    props.navigation.navigate('MovieDetail', {id: item.id});
+    // setSelectMovie(item.id);
+    props.navigation.navigate('MovieDetail', {
+      id: item.id,
+    });
   };
 
   const ListHeader = () => {
@@ -158,7 +159,7 @@ export default function ViewAll(props) {
                   <Text style={styles.category}>{item.category}</Text>
                   <TouchableOpacity
                     // disabled={item.id === data ? true : false}
-                    onPress={() => toMovieDetail(item)}
+                    onPress={toMovieDetail(item)}
                     style={[
                       item.id === selectMovie
                         ? styles.detailPress

@@ -35,7 +35,16 @@ export default function MovieCard(props) {
       <View style={styles.container}>
         {nowShowing.map(item => (
           <View key={item.id} style={styles.card}>
-            <Image style={styles.imagepic} source={Moviepict} />
+            <Image
+              style={styles.imagepic}
+              source={
+                item.image
+                  ? {
+                      uri: `https://res.cloudinary.com/erikasempana/image/upload/v1655692721/${item.image}`,
+                    }
+                  : Moviepict
+              }
+            />
             <View style={styles.content}>
               <Text style={styles.title}>{item.name}</Text>
               <Text style={styles.category}>{item.category}</Text>

@@ -21,6 +21,7 @@ import HeaderPayment from '../components/HeaderPayment';
 import HeaderProfile from '../components/HeaderProfile';
 import Counter from '../screen/Counter';
 import ListMovie from '../screen/ListMovie';
+import MidtransView from '../screen/MidtransView';
 
 function HomeNavigator() {
   return (
@@ -73,6 +74,11 @@ function HomeNavigator() {
       <Stack.Screen
         component={ListMovie}
         name="ListMovie"
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={MidtransView}
+        name="MidtransView"
         options={{headerShown: false}}
       />
     </Stack.Navigator>

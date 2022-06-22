@@ -1,30 +1,30 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Text,
-  View,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
+import {Text, View, ScrollView, TouchableOpacity, FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import {createBooking} from '../../stores/actions/booking';
 import styles from './styles';
 
-import Cineone from '../../assets/images/cineone.png';
 import Footer from '../../components/Footer';
 import Seat from '../../components/Seat';
 
 export default function Order(props) {
+  const dispatch = useDispatch();
+  const scheduleData = useSelector(state => state.scheduleById.data);
+  const profile = useSelector(state => state.user.data);
+  const detailOrder = useSelector(state => state.dataOrder.dataOrder);
+  console.log('DETAIL', detailOrder);
+  const movieOrder = useSelector(state => state.movie.data);
   const listSeat = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
   const [selectedSeat, setSelectedSeat] = useState([]);
   const [reservedSeat, setReservedSeat] = useState(['A1', 'C7']);
-  // console.log(props);
 
   useEffect(() => {
     console.log('props params', props.route.params);
   }, []);
 
   const handleSelectedSeat = data => {
+    // console.log('WHATT, data);
     if (selectedSeat.includes(data)) {
       const deleteSeat = selectedSeat.filter(el => {
         return el !== data;
@@ -39,10 +39,58 @@ export default function Order(props) {
     setSelectedSeat([]);
   };
 
-  const handleBookingSeat = () => {
-    console.log(selectedSeat);
-    props.navigation.navigate('Payment');
+  const handleBookingSeat = async () => {
+    try {
+      setReservedSeat(...selectedSeat);
+      const body = {
+        userId: profile.id,
+        scheduleId: detailOrder.scheduleId,
+        dateBooking: detailOrder.dateBooking,
+        timeBooking: detailOrder.timeBooking,
+        totalPayment: selectedSeat.length * detailOrder.price,
+        seat: selectedSeat,
+      };
+      const resultBooking = await dispatch(createBooking(body));
+      // props.navigation.navigate('Payment');
+      props.navigation.replace('MidtransView', {
+        redirectUrl: resultBooking.action.payload.data.data.redirectUrl,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const convertToRupiah = angka => {
+    var rupiah = '';
+    var angkarev = angka.toString().split('').reverse().join('');
+    for (var i = 0; i < angkarev.length; i++) {
+      if (i % 3 === 0) {
+        rupiah += angkarev.substr(i, 3) + '.';
+      }
+    }
+    return (
+      'Rp ' +
+      rupiah
+        .split('', rupiah.length - 1)
+        .reverse()
+        .join('')
+    );
+  };
+  const tConvert = time => {
+    // Check correct time format and split into components
+    time = time
+      .toString()
+      .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+    if (time.length > 1) {
+      // If time format correct
+      time = time.slice(1); // Remove full string match value
+      time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
+      time[0] = +time[0] % 12 || 12; // Adjust hours
+    }
+    return time.join(''); // return adjusted time or original string
+  };
+
   return (
     <ScrollView>
       <View style={styles.wrapper}>
@@ -107,25 +155,33 @@ export default function Order(props) {
           </View>
           <Text style={styles.title}>Order Info</Text>
           <View style={styles.card}>
-            <Image style={styles.cinema} source={Cineone} />
-            <Text style={styles.cinemaName}>CineOne21 Cinema</Text>
-            <Text style={styles.movieTitle}>Spider-Man: Homecoming</Text>
+            <Text style={styles.cinema}> {scheduleData[0].premiere}</Text>
+            <Text style={styles.cinemaName}>
+              {scheduleData[0].premiere} Cinema
+            </Text>
+            <Text style={styles.movieTitle}>{movieOrder.name}</Text>
             <View style={styles.orderInfo}>
-              <Text style={styles.info1}>Tuesday, 07 July 2020</Text>
-              <Text style={styles.info2}>02:00pm</Text>
+              <Text style={styles.info1}>{detailOrder.dateBooking}</Text>
+              <Text style={styles.info2}>
+                {tConvert(detailOrder.timeBooking)}
+              </Text>
             </View>
             <View style={styles.orderInfo}>
-              <Text style={styles.info1}>Tuesday, 07 July 2020</Text>
-              <Text style={styles.info2}>02:00pm</Text>
+              <Text style={styles.info1}>One ticket price</Text>
+              <Text style={styles.info2}>
+                {convertToRupiah(detailOrder.price)}
+              </Text>
             </View>
             <View style={styles.orderInfo}>
-              <Text style={styles.info1}>Tuesday, 07 July 2020</Text>
-              <Text style={styles.info2}>02:00pm</Text>
+              <Text style={styles.info1}>Seat choosed</Text>
+              <Text style={styles.info2}>{selectedSeat.join(', ')}</Text>
             </View>
             <View style={styles.lineStyle} />
             <View style={styles.totalWrapper}>
               <Text style={styles.totalName}>Total Payment</Text>
-              <Text style={styles.totalValue}>$30</Text>
+              <Text style={styles.totalValue}>
+                {convertToRupiah(selectedSeat.length * detailOrder.price)}
+              </Text>
             </View>
           </View>
           <TouchableOpacity style={styles.button} onPress={handleBookingSeat}>

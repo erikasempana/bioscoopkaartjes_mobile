@@ -72,6 +72,9 @@ export default StyleSheet.create({
     borderColor: '#DEDEDE',
     marginTop: 35,
   },
+  synopsis: {
+    minHeight: 200,
+  },
   synopsisname: {
     fontSize: 16,
     fontWeight: '400',
@@ -89,6 +92,7 @@ export default StyleSheet.create({
   wrapperShowTime: {
     backgroundColor: '#F5F6F8',
     paddingTop: 50,
+    marginHorizontal: -20,
     paddingEnd: 20,
     paddingStart: 20,
   },
@@ -119,6 +123,9 @@ export default StyleSheet.create({
   },
   cinema: {
     alignSelf: 'center',
+    fontWeight: 'bold',
+    fontSize: 45,
+    color: '#5F2EEA',
   },
   cinemaLocation: {
     paddingTop: 15,
@@ -137,7 +144,7 @@ export default StyleSheet.create({
     fontWeight: '400',
     fontSize: 12,
     color: '#4E4B66',
-    marginHorizontal: 5,
+    marginRight: 10,
   },
   priceWrapper: {
     display: 'flex',
