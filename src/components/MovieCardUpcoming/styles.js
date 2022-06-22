@@ -22,6 +22,7 @@ export default StyleSheet.create({
     margin: 17,
     resizeMode: 'contain',
     width: 122,
+    height: '100%',
   },
   content: {
     marginRight: 20,

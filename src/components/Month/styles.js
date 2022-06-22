@@ -5,6 +5,7 @@ export default StyleSheet.create({
     paddingTop: 20,
     paddingEnd: 20,
     paddingStart: 20,
+    paddingBottom: 10,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-evenly',

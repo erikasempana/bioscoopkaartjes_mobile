@@ -1,11 +1,14 @@
 import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
 import styles from './styles';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
+import {GetMovieUpcoming} from '../../stores/actions/movie';
 
 export default function Month(props) {
+  const dispatch = useDispatch();
   const [sortMonth, setSortMonth] = useState('');
-  const [monthList, setMonthList] = useState([
+  const monthList = [
     {id: 1, month: 'January'},
     {id: 2, month: 'February'},
     {id: 3, month: 'March'},
@@ -18,22 +21,45 @@ export default function Month(props) {
     {id: 10, month: 'October'},
     {id: 11, month: 'November'},
     {id: 12, month: 'December'},
-  ]);
+  ];
 
   var touchButton = {
     activeOpacity: 1,
     underlayColor: '#5F2EEA',
   };
-  const handlePressButton = item => {
-    setSortMonth(item.id);
-    console.log(item);
+  const handlePressButton = async item => {
+    try {
+      setSortMonth(item.id);
+      console.log(item);
+      const params = item.id;
+      await dispatch(GetMovieUpcoming(params));
+      // // console.log('upcomingmovie', resultUpComingMovie.data.data);
+      // setUpComingMovie(resultUpComingMovie.data.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  // const handleMonth = async () => {
+  //   try {
+  //     const id = props.route.params.id;
+  //     const resultUpComingMovie = await axios.get(`movie/?searchRelease=${id}`);
+  //     // console.log(
+  //     //   'upcomingmovie',
+  //     //   resultUpComingMovie.action.payload.data.data,
+  //     // );
+  //     setUpComingMovie(resultUpComingMovie.action.payload.data.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <ScrollView horizontal={true}>
       <View style={styles.container}>
         {monthList.map((item, idx) => (
           <TouchableOpacity
+            disabled={item.id === monthList ? true : false}
             {...touchButton}
             key={item.id}
             onPress={() => handlePressButton(item, idx)}

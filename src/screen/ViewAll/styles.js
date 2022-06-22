@@ -67,7 +67,7 @@ export default StyleSheet.create({
     borderColor: '#FFF',
     borderWidth: 2,
     // marginRight: 5,
-    // marginTop: 40,
+    // marginTop: 10,
     marginBottom: 10,
     borderRadius: 6,
     width: 155,
@@ -80,7 +80,7 @@ export default StyleSheet.create({
     top: -90,
   },
   content: {
-    top: -175,
+    top: 185,
     marginRight: 20,
     marginLeft: 20,
     marginBottom: 20,
@@ -98,6 +98,7 @@ export default StyleSheet.create({
     textAlign: 'center',
     lineHeight: 13.75,
     minHeight: 30,
+    fontSize: 11,
   },
   detail: {
     marginTop: 10,
@@ -109,6 +110,18 @@ export default StyleSheet.create({
     textAlign: 'center',
     margin: 5,
     color: '#5F2EEA',
+  },
+  detailPress: {
+    marginTop: 10,
+    borderColor: '#5F2EEA',
+    backgroundColor: '#5F2EEA',
+    borderWidth: 1,
+    borderRadius: 4,
+  },
+  detailTextPress: {
+    textAlign: 'center',
+    margin: 5,
+    color: '#FFF',
   },
   viewMoreWrapper: {
     display: 'flex',

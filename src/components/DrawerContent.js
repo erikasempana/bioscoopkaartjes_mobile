@@ -1,5 +1,6 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import axios from '../utils/axios';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import {
   DrawerContentScrollView,
@@ -13,18 +14,26 @@ import Icon from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function DrawerContent(props) {
+  const dispatch = useDispatch();
   const profile = useSelector(state => state.user.data);
-  console.log('first', profile);
+  const refreshToken = useSelector(
+    state => state.loginReducer.data.refreshToken,
+  );
 
   const handleLogout = async () => {
     try {
       alert('Logout');
       await AsyncStorage.clear();
-      props.navigation.navigate('AuthScreen', {
+      const body = {
+        refreshToken,
+      };
+      await axios.post('auth/logout', body);
+      props.navigation.replace('AuthScreen', {
         screen: 'Login',
       });
     } catch (error) {}
   };
+
   return (
     <View style={styles.container}>
       <DrawerContentScrollView {...props}>

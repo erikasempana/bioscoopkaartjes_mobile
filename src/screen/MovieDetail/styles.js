@@ -22,8 +22,9 @@ export default StyleSheet.create({
   },
   movieimg: {
     margin: 30,
-    resizeMode: 'contain',
     height: '80%',
+    width: 180,
+    resizeMode: 'contain',
     alignSelf: 'center',
   },
   title: {

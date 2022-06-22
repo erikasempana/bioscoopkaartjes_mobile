@@ -21,9 +21,9 @@ export const UpdateImage = (id, form) => {
   };
 };
 
-export const UpdatePassword = id => {
+export const UpdatePassword = form => {
   return {
     type: 'UPDATE_PASSWORD',
-    payload: axios.patch(`user/password/${id}`),
+    payload: axios.patch('user/password', form),
   };
 };

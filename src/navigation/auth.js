@@ -11,13 +11,26 @@ import ResetPassword from '../screen/ResetPassword';
 export default function AuthNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen component={Login} name="Login" />
-      <Stack.Screen component={Register} name="Register" />
+      <Stack.Screen
+        component={Login}
+        name="Login"
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={Register}
+        name="Register"
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         component={ConfirmResetPassword}
         name="ConfirmResetPassword"
+        options={{headerShown: false}}
       />
-      <Stack.Screen component={ResetPassword} name="ResetPassword" />
+      <Stack.Screen
+        component={ResetPassword}
+        name="ResetPassword"
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 }

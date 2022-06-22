@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import styles from './styles';
 import Month from '../../components/Month';
-import Moviepict from '../../assets/images/spiderman.png';
+// import Moviepict from '../../assets/images/spiderman.png';
 import Footer from '../../components/Footer';
 
 // Dropdown Picker
@@ -27,6 +27,7 @@ export default function ViewAll(props) {
   const [loading, setLoading] = useState(false);
   const [last, setLast] = useState(false);
   const [loadMore, setLoadMore] = useState(false);
+  const [selectMovie, setSelectMovie] = useState('');
 
   useEffect(() => {
     getDataMovie();
@@ -54,7 +55,7 @@ export default function ViewAll(props) {
       if (page <= totalPage) {
         const result = await dispatch(getAllMovie(page));
 
-        console.log('result ANNNNNNNNN', result.action.payload.data.data);
+        // console.log('result ANNNNNNNNN', result.action.payload.data.data);
         // const result = await axios.get(`movie?page=${page}&limit=4`);
         if (page === 1) {
           setData(result.action.payload.data.data);
@@ -96,6 +97,12 @@ export default function ViewAll(props) {
     }
   };
 
+  const toMovieDetail = item => {
+    setSelectMovie(item.id);
+    // console.log('item', item.id);
+    props.navigation.navigate('MovieDetail', {id: item.id});
+  };
+
   const ListHeader = () => {
     return (
       <>
@@ -127,10 +134,6 @@ export default function ViewAll(props) {
     );
   };
 
-  const toMovieDetail = () => {
-    props.navigation.navigate('MovieDetail');
-  };
-
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
@@ -142,14 +145,33 @@ export default function ViewAll(props) {
           renderItem={({item}) => (
             <View style={styles.wrappercard}>
               <View style={styles.card}>
-                <Image style={styles.imagepic} source={Moviepict} />
+                <Image
+                  style={styles.imagepic}
+                  source={{
+                    uri: `https://res.cloudinary.com/erikasempana/image/upload/v1655692721/${item.image}`,
+                    // uri: `${CLOUDINARY_URL + profile.image}`,
+                  }}
+                />
+
                 <View style={styles.content}>
                   <Text style={styles.title}>{item.name}</Text>
                   <Text style={styles.category}>{item.category}</Text>
                   <TouchableOpacity
-                    style={styles.detail}
-                    onPress={toMovieDetail}>
-                    <Text style={styles.detailText}>Detail</Text>
+                    // disabled={item.id === data ? true : false}
+                    onPress={() => toMovieDetail(item)}
+                    style={[
+                      item.id === selectMovie
+                        ? styles.detailPress
+                        : styles.detail,
+                    ]}>
+                    <Text
+                      style={[
+                        item.id === selectMovie
+                          ? styles.detailTextPress
+                          : styles.detailText,
+                      ]}>
+                      Detail
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </View>

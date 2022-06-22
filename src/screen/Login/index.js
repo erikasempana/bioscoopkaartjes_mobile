@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
-import axios from '../../utils/axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   View,
@@ -15,6 +14,7 @@ import styles from './styles';
 
 import logo from '../../assets/logo/logobiosscoopkaartjes.png';
 import {GetUserById} from '../../stores/actions/user';
+import {loginAction} from '../../stores/actions/auth';
 
 function LoginScreen(props) {
   const dispatch = useDispatch();
@@ -26,28 +26,52 @@ function LoginScreen(props) {
   const handleLogin = async () => {
     try {
       console.log(form);
-      const result = await axios.post('auth/login', form);
-      await AsyncStorage.setItem('id', result.data.data.id);
-      await AsyncStorage.setItem('token', result.data.data.token);
-      await AsyncStorage.setItem('refreshToken', result.data.data.refreshToken);
-      await dispatch(GetUserById(result.data.data.id));
+      // const result = await axios.post('auth/login', form);
+      const result = await dispatch(loginAction(form));
+      await AsyncStorage.setItem('id', result.action.payload.data.data.id);
+      await AsyncStorage.setItem(
+        'token',
+        result.action.payload.data.data.token,
+      );
+      await AsyncStorage.setItem(
+        'refreshToken',
+        result.action.payload.data.data.refreshToken,
+      );
+      await dispatch(GetUserById(result.action.payload.data.data.id));
 
-      ToastAndroid.show(result.data.msg, ToastAndroid.SHORT);
-      props.navigation.navigate('AppScreen', {
+      ToastAndroid.show(result.action.payload.data.msg, ToastAndroid.SHORT);
+      props.navigation.replace('AppScreen', {
         screen: 'Home',
       });
     } catch (error) {
-      console.log(error.response);
+      console.log(error);
       ToastAndroid.show(error.response.data.msg, ToastAndroid.SHORT);
     }
   };
 
-  const handleReset = () => {
-    setForm({
-      email: '',
-      password: '',
+  const getAsyncStorage = async () => {
+    // const dataToken = await AsyncStorage.getItem('token');
+    // console.log(dataToken);
+    AsyncStorage.getAllKeys((err, keys) => {
+      AsyncStorage.multiGet(keys, (error, stores) => {
+        stores.map((result, i, store) => {
+          console.log({[store[i][0]]: store[i][1]});
+          return true;
+        });
+      });
     });
   };
+
+  useEffect(() => {
+    getAsyncStorage();
+  }, []);
+
+  // const handleReset = () => {
+  //   setForm({
+  //     email: '',
+  //     password: '',
+  //   });
+  // };
 
   const handleChangeForm = (text, name) => {
     // e.target.value || e.target.name;

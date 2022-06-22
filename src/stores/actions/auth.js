@@ -6,3 +6,10 @@ export const loginAction = form => {
     payload: axios.post('auth/login', form),
   };
 };
+
+export const logoutAction = body => {
+  return {
+    type: 'LOGOUT',
+    payload: axios.post('auth/logout', body),
+  };
+};
