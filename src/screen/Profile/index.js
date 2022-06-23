@@ -9,14 +9,18 @@ import {
   ToastAndroid,
   TouchableOpacity,
   View,
+  Alert,
+  Modal,
+  Pressable,
 } from 'react-native';
 import styles from './styles';
 
-import User from '../../assets/images/user1.jpg';
+// import User from '../../assets/images/user1.jpg';
 import Footer from '../../components/Footer';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {UpdatePassword} from '../../stores/actions/user';
+// import ModalUpdateImage from '../../components/Modal.js';
 
 export default function Profile(props) {
   const dispatch = useDispatch();
@@ -24,10 +28,14 @@ export default function Profile(props) {
   const refreshToken = useSelector(
     state => state.loginReducer.data.refreshToken,
   );
+  const [modalVisible, setModalVisible] = useState(false);
   const [form, setForm] = useState({
     oldPassword: '',
     newPassword: '',
     confirmPassword: '',
+  });
+  const [image, setImage] = useState({
+    image: '',
   });
 
   const handleLogout = async () => {
@@ -55,7 +63,6 @@ export default function Profile(props) {
       // const id = profile.id;
       console.log(form);
       const result = await dispatch(UpdatePassword(form));
-      // const result = await axios.patch(""(id, form));
       console.log('result Password', result);
       ToastAndroid.show(result.action.payload.data.msg, ToastAndroid.SHORT);
     } catch (error) {
@@ -63,13 +70,51 @@ export default function Profile(props) {
       ToastAndroid.show(error.response.data.msg, ToastAndroid.SHORT);
     }
   };
+
+  const handleUpdateImage = () => {
+    try {
+      console.log('GANTI FOTO YUK');
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <ScrollView>
       <View style={styles.wrapper}>
+        <View style={styles.centeredView}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert('Modal has been closed.');
+              setModalVisible(!modalVisible);
+            }}>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>Change Image ?</Text>
+                <Pressable
+                  style={[styles.buttonModal, styles.buttonModalClose]}
+                  onPress={() => setModalVisible(!modalVisible)}>
+                  <Text style={styles.textStyle}>Hide Modal</Text>
+                </Pressable>
+              </View>
+            </View>
+          </Modal>
+        </View>
         <View style={styles.container}>
           <View style={styles.card}>
             <Text style={styles.title}>INFO</Text>
-            <Image style={styles.UserImage} source={User} />
+            <TouchableOpacity
+              onPress={() => setModalVisible(true)}
+              onChangeText={text => handleChangeForm(text, 'image')}>
+              <Image
+                style={styles.UserImage}
+                source={{
+                  uri: `https://res.cloudinary.com/erikasempana/image/upload/v1655692721/${profile.image}`,
+                }}
+              />
+            </TouchableOpacity>
             <Text style={styles.userName}>
               {profile.firstName + profile.lastName}
             </Text>

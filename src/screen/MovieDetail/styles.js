@@ -128,7 +128,7 @@ export default StyleSheet.create({
     color: '#5F2EEA',
   },
   cinemaLocation: {
-    paddingTop: 15,
+    paddingTop: 5,
     textAlign: 'center',
   },
   timeWrapper: {
@@ -144,7 +144,16 @@ export default StyleSheet.create({
     fontWeight: '400',
     fontSize: 12,
     color: '#4E4B66',
-    marginRight: 10,
+    marginHorizontal: 15,
+    justifyContent: 'space-between',
+  },
+  timeChoose: {
+    paddingBottom: 10,
+    fontWeight: '400',
+    fontSize: 12,
+    color: '#5F2EEA',
+    marginHorizontal: 15,
+    justifyContent: 'space-between',
   },
   priceWrapper: {
     display: 'flex',

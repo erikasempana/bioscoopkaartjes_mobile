@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
-import {getAllMovie} from '../../stores/actions/movie';
+import {getAllMovie, getAllMovieMonth} from '../../stores/actions/movie';
 import {
   ActivityIndicator,
   Image,
@@ -28,6 +28,7 @@ export default function ViewAll(props) {
   const [last, setLast] = useState(false);
   const [loadMore, setLoadMore] = useState(false);
   const [selectMovie, setSelectMovie] = useState('');
+  const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
     getDataMovie();
@@ -49,20 +50,18 @@ export default function ViewAll(props) {
 
   const getDataMovie = async () => {
     try {
+      setDisabled(false);
       setRefresh(false);
       setLoading(false);
       setLoadMore(false);
       if (page <= totalPage) {
         const result = await dispatch(getAllMovie(page));
-
-        // console.log('result ANNNNNNNNN', result.action.payload.data.data);
-        // const result = await axios.get(`movie?page=${page}&limit=4`);
+        // await dispatch(getAllMovieMonth(page, params));
         if (page === 1) {
           setData(result.action.payload.data.data);
         } else {
           setData([...data, ...result.action.payload.data.data]);
         }
-        // setTotalPage(result.data.pagination.totalPage);
         setTotalPage(result.action.payload.data.pagination.totalPage);
       } else {
         setLast(true);
@@ -98,7 +97,7 @@ export default function ViewAll(props) {
   };
 
   const toMovieDetail = item => {
-    // setSelectMovie(item.id);
+    setSelectMovie(item.id);
     props.navigation.navigate('MovieDetail', {
       id: item.id,
     });
@@ -142,7 +141,7 @@ export default function ViewAll(props) {
           numColumns={2}
           data={data}
           ListHeaderComponent={ListHeader}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item}
           renderItem={({item}) => (
             <View style={styles.wrappercard}>
               <View style={styles.card}>
@@ -158,7 +157,9 @@ export default function ViewAll(props) {
                   <Text style={styles.title}>{item.name}</Text>
                   <Text style={styles.category}>{item.category}</Text>
                   <TouchableOpacity
-                    // disabled={item.id === data ? true : false}
+                    // disabled={
+                    //   item.id === selectMovie ? disabled : setDisabled(false)
+                    // }
                     onPress={toMovieDetail(item)}
                     style={[
                       item.id === selectMovie

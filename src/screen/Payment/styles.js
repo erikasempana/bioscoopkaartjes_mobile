@@ -117,11 +117,12 @@ export default StyleSheet.create({
     lineHeight: 24,
   },
   prefix: {
-    bottom: -11,
+    bottom: -15,
+    left: 5,
     paddingStart: 10,
     color: 'grey',
-    fontSize: 14,
-    fontWeight: '400',
+    fontSize: 24,
+    fontWeight: '300',
     lineHeight: 24,
     borderEndWidth: 1,
     borderEndColor: 'grey',
@@ -151,7 +152,7 @@ export default StyleSheet.create({
     height: 50,
     backgroundColor: '#5F2EEA',
     borderRadius: 12,
-    padding: 12,
+    padding: 15,
     marginBottom: 40,
   },
   buttontext: {
@@ -159,7 +160,6 @@ export default StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '700',
-    lineHeight: 28,
   },
   alert: {
     marginHorizontal: 10,

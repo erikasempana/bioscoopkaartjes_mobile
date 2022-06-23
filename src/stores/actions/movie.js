@@ -7,6 +7,13 @@ export const getAllMovie = page => {
   };
 };
 
+export const getAllMovieMonth = (page, params) => {
+  return {
+    type: 'GET_ALL_MOVIE_MONTH',
+    payload: axios.get(`movie/?limit=4&page=${page}&searchRelease=${params}`),
+  };
+};
+
 export const getMovieById = id => {
   return {
     type: 'GET_MOVIE_BY_ID',

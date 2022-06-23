@@ -18,6 +18,7 @@ import styles from './styles';
 import Icon from 'react-native-vector-icons/Feather';
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import Footer from '../../components/Footer';
+import dayjs from 'dayjs';
 
 import DefaultPict from '../../assets/images/default.png';
 
@@ -158,7 +159,7 @@ export default function MovieDetail(props) {
     if (time.length > 1) {
       // If time format correct
       time = time.slice(1); // Remove full string match value
-      time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
+      time[5] = +time[0] < 12 ? ' am' : ' pm'; // Set AM/PM
       time[0] = +time[0] % 12 || 12; // Adjust hours
     }
     return time.join(''); // return adjusted time or original string
@@ -198,8 +199,7 @@ export default function MovieDetail(props) {
           <View style={styles.left}>
             <Text style={styles.name}>Release date</Text>
             <Text style={styles.value}>
-              {/* {detailMovie.releaseDate.split('T')[0]} */}
-              {detailMovie.releaseDate}
+              {dayjs(detailMovie.releaseDate).format('MMMM D, YYYY')}
             </Text>
           </View>
           <View style={styles.right}>
@@ -257,6 +257,7 @@ export default function MovieDetail(props) {
                 <View style={styles.timeWrapper}>
                   {el.time.split(', ').map(itemTime => (
                     <TouchableOpacity
+                      // disabled={itemTime ? true : false}
                       key={itemTime}
                       onPress={() =>
                         changeDataBooking({
@@ -265,7 +266,10 @@ export default function MovieDetail(props) {
                           // premiere:
                         })
                       }>
-                      <Text style={styles.time}>{tConvert(itemTime)}</Text>
+                      <Text
+                        style={itemTime.data ? styles.timeChoose : styles.time}>
+                        {tConvert(itemTime)}
+                      </Text>
                     </TouchableOpacity>
                   ))}
                   {/* {el.time} */}

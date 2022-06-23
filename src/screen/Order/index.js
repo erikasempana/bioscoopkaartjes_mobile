@@ -1,19 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {Text, View, ScrollView, TouchableOpacity, FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {createBooking} from '../../stores/actions/booking';
 import styles from './styles';
 
 import Footer from '../../components/Footer';
 import Seat from '../../components/Seat';
 
 export default function Order(props) {
-  const dispatch = useDispatch();
-  const scheduleData = useSelector(state => state.scheduleById.data);
   const profile = useSelector(state => state.user.data);
+  const scheduleData = useSelector(state => state.scheduleById.data);
   const detailOrder = useSelector(state => state.dataOrder.dataOrder);
-  console.log('DETAIL', detailOrder);
   const movieOrder = useSelector(state => state.movie.data);
   const listSeat = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
   const [selectedSeat, setSelectedSeat] = useState([]);
@@ -39,25 +36,14 @@ export default function Order(props) {
     setSelectedSeat([]);
   };
 
-  const handleBookingSeat = async () => {
-    try {
-      setReservedSeat(...selectedSeat);
-      const body = {
-        userId: profile.id,
-        scheduleId: detailOrder.scheduleId,
-        dateBooking: detailOrder.dateBooking,
-        timeBooking: detailOrder.timeBooking,
-        totalPayment: selectedSeat.length * detailOrder.price,
-        seat: selectedSeat,
-      };
-      const resultBooking = await dispatch(createBooking(body));
-      // props.navigation.navigate('Payment');
-      props.navigation.replace('MidtransView', {
-        redirectUrl: resultBooking.action.payload.data.data.redirectUrl,
-      });
-    } catch (error) {
-      console.log(error);
-    }
+  const handleBookingSeat = () => {
+    setReservedSeat(...selectedSeat);
+
+    props.navigation.navigate('Payment', {
+      reservedSeat,
+      totalPayment: reservedSeat.length * detailOrder.price,
+      profile: {...profile},
+    });
   };
 
   const convertToRupiah = angka => {
@@ -98,7 +84,9 @@ export default function Order(props) {
           <Text style={styles.title}>Choose Your Seat</Text>
           <View style={styles.card1}>
             <View style={styles.container1}>
-              <View style={styles.screenline} />
+              <View style={styles.screenline}>
+                <Text style={styles.screenlineText}>screen</Text>
+              </View>
               <View style={styles.containerSeat}>
                 <View style={styles.greenline} />
                 <FlatList

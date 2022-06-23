@@ -39,9 +39,13 @@ export default StyleSheet.create({
   },
   screenline: {
     bottom: -25,
-    borderWidth: 3,
-    borderColor: '#9570FE',
+    backgroundColor: '#9570FE',
     borderRadius: 3,
+  },
+  screenlineText: {
+    fontSize: 12,
+    color: 'white',
+    textAlign: 'center',
   },
   seatWrapper: {
     paddingTop: 20,

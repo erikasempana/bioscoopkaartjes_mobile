@@ -3,11 +3,12 @@ import {useDispatch} from 'react-redux';
 import styles from './styles';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import {GetMovieUpcoming} from '../../stores/actions/movie';
+import {getAllMovieMonth, GetMovieUpcoming} from '../../stores/actions/movie';
 
 export default function Month(props) {
   const dispatch = useDispatch();
   const [sortMonth, setSortMonth] = useState('');
+  const [disabled, setDisabled] = useState(false);
   const monthList = [
     {id: 1, month: 'January'},
     {id: 2, month: 'February'},
@@ -30,9 +31,9 @@ export default function Month(props) {
   const handlePressButton = async item => {
     try {
       setSortMonth(item.id);
-      console.log(item);
       const params = item.id;
       await dispatch(GetMovieUpcoming(params));
+      setDisabled(true);
       // // console.log('upcomingmovie', resultUpComingMovie.data.data);
       // setUpComingMovie(resultUpComingMovie.data.data);
     } catch (error) {
@@ -59,7 +60,7 @@ export default function Month(props) {
       <View style={styles.container}>
         {monthList.map((item, idx) => (
           <TouchableOpacity
-            disabled={item.id === monthList ? true : false}
+            // disabled={item.id === sortMonth ? disabled : false}
             {...touchButton}
             key={item.id}
             onPress={() => handlePressButton(item, idx)}

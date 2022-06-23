@@ -7,16 +7,13 @@ export default StyleSheet.create({
   },
   container: {
     paddingTop: 40,
-    paddingEnd: 30,
-    paddingStart: 30,
+    paddingHorizontal: 30,
   },
-  card: {
+
+  // QrCode ----------------
+  cardQr: {
     backgroundColor: '#FFF',
-    borderRadius: 16,
-    padding: 25,
-    marginBottom: 30,
-    flexWrap: 'wrap',
-    maxWidth: 320,
+    paddingTop: 20,
   },
   codeQr: {
     resizeMode: 'contain',
@@ -28,20 +25,23 @@ export default StyleSheet.create({
     alignSelf: 'center',
   },
 
-  roundWrapper: {
+  // LineBottom
+  roundWrapper3: {
+    alignSelf: 'center',
     display: 'flex',
     flexDirection: 'row',
-    marginHorizontal: -40,
+    justifyContent: 'center',
+    right: -7,
   },
-  lineStyle1: {
+  lineStyle3: {
     borderWidth: 1,
     borderColor: '#DEDEDE',
-    marginTop: 15,
-    marginBottom: 20,
+    marginTop: 30,
     width: 270,
     borderStyle: 'dashed',
   },
-  round: {
+  round3: {
+    bottom: -10,
     width: 30,
     height: 30,
     borderRadius: 150 / 2,
@@ -50,17 +50,73 @@ export default StyleSheet.create({
     borderColor: '#F5F6F8',
     backgroundColor: '#F5F6F8',
   },
+  // End LineBottom
+  // End QrCode ----------------
+
+  card: {
+    backgroundColor: '#FFF',
+    borderRadius: 16,
+    padding: 25,
+    marginBottom: 30,
+    flexWrap: 'wrap',
+  },
+
+  cardUsed: {
+    bottom: -20,
+    backgroundColor: '#FFF',
+    borderRadius: 16,
+    padding: 25,
+    marginBottom: 30,
+    flexWrap: 'wrap',
+    maxWidth: 320,
+  },
+
+  // LineBottom
+  roundWrapper2: {
+    alignSelf: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    // marginHorizontal: 40,
+  },
+  lineStyle2: {
+    borderWidth: 1,
+    borderColor: '#DEDEDE',
+    marginTop: -25,
+    marginBottom: 25,
+    width: 270,
+    borderStyle: 'dashed',
+  },
+  round2: {
+    marginTop: -35,
+    width: 30,
+    height: 30,
+    borderRadius: 150 / 2,
+    overflow: 'hidden',
+    borderWidth: 3,
+    borderColor: '#F5F6F8',
+    backgroundColor: '#F5F6F8',
+  },
+  // End LineBottom
+
   wrapperDetail: {
-    paddingTop: 50,
+    paddingTop: 40,
     display: 'flex',
     flexDirection: 'column',
   },
   detail: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 10,
     paddingBottom: 20,
+    justifyContent: 'space-around',
+  },
+  detailLeft: {
+    alignSelf: 'flex-start',
+    left: -10,
+  },
+  detailRight: {
+    alignSelf: 'flex-start',
+    left: -30,
   },
   detailName: {
     flex: 1,
@@ -80,20 +136,23 @@ export default StyleSheet.create({
   },
   detailTotal: {
     marginTop: 20,
+    left: -20,
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
     marginBottom: 10,
     borderColor: '#DEDEDE',
     borderWidth: 1,
     borderRadius: 4,
   },
   total: {
-    textAlign: 'left',
+    flex: 1,
+    justifyContent: 'space-between',
+    textAlign: 'center',
     fontSize: 16,
     fontWeight: '600',
-    lineHeight: 28,
+    paddingVertical: 10,
     color: '#000',
   },
 });

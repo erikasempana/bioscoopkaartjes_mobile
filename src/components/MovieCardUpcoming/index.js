@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {Image, View, Text, TouchableOpacity} from 'react-native';
 import styles from './styles';
 import {useDispatch, useSelector} from 'react-redux';

@@ -33,6 +33,32 @@ const movie = (state = initialState, action) => {
         msg: action.payload.response.data.msg,
       };
     }
+    case 'GET_ALL_MOVIE_MONTH_PENDING': {
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+        msg: '',
+      };
+    }
+    case 'GET_ALL_MOVIE_MONTH_FULFILLED': {
+      console.log(action.payload);
+      return {
+        ...state,
+        isLoading: false,
+        data: {...action.payload.data.data},
+        msg: action.payload.data.msg,
+      };
+    }
+    case 'GET_ALL_MOVIE_MONTH_REJECTED': {
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        data: {},
+        msg: action.payload.response.data.msg,
+      };
+    }
     case 'GET_MOVIE_BY_ID_PENDING': {
       console.log(action.payload);
       return {
