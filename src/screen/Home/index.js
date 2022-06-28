@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, Image} from 'react-native';
 import styles from './styles';
 import TagLine from '../../assets/images/nearest.png';
@@ -11,9 +11,18 @@ import Membership from '../../components/Membership';
 import Footer from '../../components/Footer';
 
 export default function Home(props) {
+  const [monthId, setMonthId] = useState('');
   const toViewAll = () => {
     props.navigation.navigate('ViewAll');
   };
+
+  const handleMonthId = sortMonth => {
+    console.log(sortMonth);
+    setMonthId(sortMonth);
+  };
+
+  console.log(monthId);
+
   return (
     <ScrollView>
       <View style={styles.wrapper}>
@@ -52,8 +61,8 @@ export default function Home(props) {
             </View>
           </View>
         </View>
-        <Month {...props} />
-        <MovieCardUpcoming {...props} />
+        <Month sortMonth={handleMonthId} />
+        <MovieCardUpcoming {...props} monthId />
       </View>
       <Membership />
       <Footer {...props} />

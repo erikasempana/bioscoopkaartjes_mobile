@@ -1,22 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, Text, View, TouchableOpacity} from 'react-native';
+import {ScrollView, Text, View, TouchableOpacity, Image} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  getBookingByUserId,
-  updateStatusBooking,
-} from '../../stores/actions/booking';
+import {getBookingByUserId} from '../../stores/actions/booking';
 import styles from './styles';
 import dayjs from 'dayjs';
 
 import Footer from '../../components/Footer';
+import EbuId from '../../assets/images/ebuid.png';
+import Hiflix from '../../assets/images/hiflix.png';
+import cineone from '../../assets/images/cineone.png';
 
 export default function OrderHistory(props) {
   const dispatch = useDispatch();
-  const booking = useSelector(state => state.booking.data);
-  const profile = useSelector(state => state.loginReducer.data);
-  const dataOrderHistory = useSelector(state => state.orderHistory.data.result);
+  const profile = useSelector(state => state.user.data);
   const [bookingId, setBookingId] = useState('');
-  console.log('PROFILE', dataOrderHistory);
+  const dataOrderHistory = useSelector(state => state.orderHistory.data);
 
   useEffect(() => {
     historyBooking();
@@ -24,7 +22,6 @@ export default function OrderHistory(props) {
 
   const historyBooking = async () => {
     try {
-      console.log('HISTORY BELI TIKET');
       const userId = profile.id;
       await dispatch(getBookingByUserId(userId));
     } catch (error) {
@@ -32,12 +29,11 @@ export default function OrderHistory(props) {
     }
   };
 
-  const handleTicket = async () => {
+  const handleTicket = async item => {
     try {
-      const id = booking.id;
-      const resultStatus = await dispatch(updateStatusBooking(id));
-      setBookingId(resultStatus.action.payload.data.data.id);
-      props.navigation.navigate('TicketResult', {bookingId});
+      console.log('ITEM', item.id);
+      // setBookingId(item.id);
+      props.navigation.navigate('TicketResult', {id: item.id});
     } catch (error) {
       console.log(error);
     }
@@ -63,8 +59,21 @@ export default function OrderHistory(props) {
       <View style={styles.wrapper}>
         <View style={styles.container}>
           {dataOrderHistory.map(item => (
-            <View key={item.index} style={styles.card}>
-              <Text style={styles.cinema}>{}</Text>
+            <View key={item.id} style={styles.card}>
+              <Image
+                style={styles.cinema}
+                source={
+                  item.premiere === 'Ebu.id' ? (
+                    EbuId
+                  ) : item.premiere === 'Hiflix' ? (
+                    Hiflix
+                  ) : item.premiere === 'cineOne21' ? (
+                    cineone
+                  ) : (
+                    <Text>Unknown Premiere</Text>
+                  )
+                }
+              />
               <Text style={styles.schedule}>
                 {dayjs(item.dateBooking).format('ddd, MMM D YYYY')} -{' '}
                 {tConvert(item.timeBooking)}
@@ -74,13 +83,13 @@ export default function OrderHistory(props) {
               {item.statusUsed === 'active' ? (
                 <TouchableOpacity
                   style={styles.buttonUpdate}
-                  onPress={handleTicket}>
+                  onPress={() => handleTicket(item)}>
                   <Text style={styles.buttonUpdateText}>Ticket in active</Text>
                 </TouchableOpacity>
               ) : (
                 <TouchableOpacity
                   style={styles.buttonUsed}
-                  onPress={handleTicket}>
+                  onPress={() => handleTicket(item)}>
                   <Text style={styles.buttonUsedText}>Ticket used</Text>
                 </TouchableOpacity>
               )}

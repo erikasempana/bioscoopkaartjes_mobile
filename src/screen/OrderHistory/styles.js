@@ -21,12 +21,11 @@ export default StyleSheet.create({
     borderWidth: 0.5,
     borderColor: '#DEDEDE',
     marginTop: 10,
-    width: 320,
-    marginHorizontal: -25,
+    width: '100%',
   },
   cinema: {
     resizeMode: 'contain',
-    width: 110,
+    height: 35,
   },
   schedule: {
     paddingTop: 15,

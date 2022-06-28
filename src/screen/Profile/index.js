@@ -19,7 +19,8 @@ import styles from './styles';
 import Footer from '../../components/Footer';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {UpdatePassword} from '../../stores/actions/user';
+import {UpdatePassword, UpdateProfile} from '../../stores/actions/user';
+import Icon from 'react-native-vector-icons/Feather';
 // import ModalUpdateImage from '../../components/Modal.js';
 
 export default function Profile(props) {
@@ -33,6 +34,11 @@ export default function Profile(props) {
     oldPassword: '',
     newPassword: '',
     confirmPassword: '',
+  });
+  const [user, setUser] = useState({
+    firstName: '',
+    lastName: '',
+    noTelp: '',
   });
   const [image, setImage] = useState({
     image: '',
@@ -54,8 +60,14 @@ export default function Profile(props) {
 
   const handleChangeForm = (text, name) => {
     // e.target.value || e.target.name;
-    console.log('change');
+    console.log('change password');
     setForm({...form, [name]: text});
+  };
+
+  const handleChangeUser = (text, name) => {
+    // e.target.value || e.target.name;
+    console.log('change user');
+    setUser({...user, [name]: text});
   };
 
   const handleUpdatePassword = async () => {
@@ -64,6 +76,17 @@ export default function Profile(props) {
       console.log(form);
       const result = await dispatch(UpdatePassword(form));
       console.log('result Password', result);
+      ToastAndroid.show(result.action.payload.data.msg, ToastAndroid.SHORT);
+    } catch (error) {
+      console.log(error);
+      ToastAndroid.show(error.response.data.msg, ToastAndroid.SHORT);
+    }
+  };
+  const handleUpdateProfile = async () => {
+    try {
+      const id = profile.id;
+      console.log(profile);
+      const result = await dispatch(UpdateProfile(id, user));
       ToastAndroid.show(result.action.payload.data.msg, ToastAndroid.SHORT);
     } catch (error) {
       console.log(error);
@@ -131,12 +154,23 @@ export default function Profile(props) {
             <Text style={styles.titleMenu}>Details Information</Text>
             <View style={styles.lineStyle1} />
             <View style={styles.inputWrapper}>
-              <Text style={styles.inputlabel}>Full Name</Text>
+              <Text style={styles.inputlabel}>First Name</Text>
               <TextInput
                 style={styles.input}
-                editable={false}
+                // editable={false}
                 selectTextOnFocus={false}
-                placeholder={profile.firstName + profile.lastName}
+                placeholder={profile.firstName}
+                onChangeText={text => handleChangeUser(text, 'firstName')}
+              />
+            </View>
+            <View style={styles.inputWrapper}>
+              <Text style={styles.inputlabel}>Last Name</Text>
+              <TextInput
+                style={styles.input}
+                // editable={false}
+                selectTextOnFocus={false}
+                placeholder={profile.lastName}
+                onChangeText={text => handleChangeUser(text, 'lastName')}
               />
             </View>
             <View style={styles.inputWrapper}>
@@ -150,11 +184,19 @@ export default function Profile(props) {
             </View>
             <View style={styles.inputWrapper}>
               <Text style={styles.inputlabel}>Phone Number</Text>
-              <Text style={styles.prefix}>+62 </Text>
-              <TextInput style={styles.input1} placeholder={profile.noTelp} />
+              <View style={styles.prefix}>
+                <Icon color={'grey'} size={15} name="phone" />
+              </View>
+              <TextInput
+                style={styles.input1}
+                placeholder={profile.noTelp}
+                onChangeText={text => handleChangeUser(text, 'noTelp')}
+              />
             </View>
           </View>
-          <TouchableOpacity style={styles.buttonUpdate}>
+          <TouchableOpacity
+            style={styles.buttonUpdate}
+            onPress={handleUpdateProfile}>
             <Text style={styles.buttonUpdateText}>Update changes</Text>
           </TouchableOpacity>
           <View style={styles.card}>
@@ -165,7 +207,7 @@ export default function Profile(props) {
               <TextInput
                 secureTextEntry={true}
                 style={styles.input}
-                placeholder="••••••••••"
+                placeholder={form.oldPassword ? form.oldPasswowrd : ''}
                 onChangeText={text => handleChangeForm(text, 'oldPassword')}
               />
             </View>
@@ -174,7 +216,7 @@ export default function Profile(props) {
               <TextInput
                 secureTextEntry={true}
                 style={styles.input}
-                placeholder="••••••••••"
+                placeholder={form.newPassword ? form.newPassword : ''}
                 onChangeText={text => handleChangeForm(text, 'newPassword')}
               />
             </View>
@@ -183,13 +225,18 @@ export default function Profile(props) {
               <TextInput
                 secureTextEntry={true}
                 style={styles.input}
-                placeholder="••••••••••"
+                placeholder={form.confirmPassword ? form.confirmPassword : ''}
                 onChangeText={text => handleChangeForm(text, 'confirmPassword')}
               />
             </View>
           </View>
           <TouchableOpacity
             style={styles.buttonUpdate}
+            // onPress={
+            //   form.oldPassword && form.newPassword && form.confirmPassword
+            //     ? handleUpdatePassword
+            //     : alert('fill your password')
+            // }
             onPress={handleUpdatePassword}>
             <Text style={styles.buttonUpdateText}>Update changes</Text>
           </TouchableOpacity>

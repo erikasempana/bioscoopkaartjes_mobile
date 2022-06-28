@@ -2,6 +2,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Feather';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -159,7 +160,7 @@ export default function AppNavigator() {
           title: 'ViewAll',
           header: props => <Header {...props} />,
           drawerIcon: ({size, color}) => {
-            <Icon name="user" size={size} color={color} />;
+            <MaterialIcon name="local-movies" size={size} color={color} />;
           },
         }}
       />
@@ -174,7 +175,7 @@ export default function AppNavigator() {
           },
         }}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         component={CounterNavigator}
         name="CounterNavigator"
         options={{
@@ -184,8 +185,8 @@ export default function AppNavigator() {
             <Icon name="user" size={size} color={color} />;
           },
         }}
-      />
-      <Drawer.Screen
+      /> */}
+      {/* <Drawer.Screen
         component={ListMovieNavigator}
         name="ListMovieNavigator"
         options={{
@@ -195,7 +196,7 @@ export default function AppNavigator() {
             <Icon name="user" size={size} color={color} />;
           },
         }}
-      />
+      /> */}
     </Drawer.Navigator>
   );
 }

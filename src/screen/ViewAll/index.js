@@ -1,22 +1,23 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
+import axios from '../../utils/axios';
 import {getAllMovie, getAllMovieMonth} from '../../stores/actions/movie';
 import {
   ActivityIndicator,
   Image,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
   FlatList,
 } from 'react-native';
 import styles from './styles';
 import Month from '../../components/Month';
-// import Moviepict from '../../assets/images/spiderman.png';
 import Footer from '../../components/Footer';
+import SearchName from '../../components/SearchName';
 
 // Dropdown Picker
 import DropDownPicker from 'react-native-dropdown-picker';
+import Sort from '../../components/Sort';
 
 export default function ViewAll(props) {
   const dispatch = useDispatch();
@@ -29,46 +30,60 @@ export default function ViewAll(props) {
   const [loadMore, setLoadMore] = useState(false);
   const [selectMovie, setSelectMovie] = useState('');
   const [disabled, setDisabled] = useState(false);
+  const [sort, setSort] = useState('ASC');
+  const [sortBy, setSortBy] = useState('');
+  const [releaseDate, setReleaseDate] = useState('');
+  const [searchName, setSearchName] = useState('');
 
   useEffect(() => {
     getDataMovie();
   }, []);
 
   useEffect(() => {
-    setTimeout(() => {
-      getDataMovie();
-    }, 2000);
-  }, [page]);
-
-  // Dropdown Picker
-  const [openDropdown, setOpenDropdown] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    {label: 'ASC', value: 'ASC'},
-    {label: 'DESC', value: 'DESC'},
-  ]);
+    getDataMovie();
+  }, [page, releaseDate, searchName, sort]);
 
   const getDataMovie = async () => {
     try {
       setDisabled(false);
       setRefresh(false);
       setLoading(false);
-      setLoadMore(false);
       if (page <= totalPage) {
-        const result = await dispatch(getAllMovie(page));
-        // await dispatch(getAllMovieMonth(page, params));
+        // const result = await dispatch(getAllMovie({page}));
+        // const result = await dispatch(getAllMovie(param));
+
+        const result = await axios.get(
+          `movie/?limit=4&page=${page}&sort=${sort}&sortBy=${sortBy}&searchRelease=${releaseDate}&searchName=${searchName}`,
+        );
+        console.log('RESULT', result.data);
         if (page === 1) {
-          setData(result.action.payload.data.data);
+          setData(result.data.data);
         } else {
-          setData([...data, ...result.action.payload.data.data]);
+          setData([...data, ...result.data.data]);
         }
-        setTotalPage(result.action.payload.data.pagination.totalPage);
+        setTotalPage(result.data.pagination.totalPage);
       } else {
         setLast(true);
       }
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleMonth = sortMonth => {
+    console.log(sortMonth);
+    setReleaseDate(sortMonth);
+  };
+
+  const handleSearch = text => {
+    console.log('ARE YOU CALLING ME ?', text);
+    text = text;
+    setSearchName({text});
+  };
+
+  const handleSort = sortItems => {
+    setSortBy('name');
+    setSort(sortItems.value);
   };
 
   const handleRefresh = () => {
@@ -97,6 +112,7 @@ export default function ViewAll(props) {
   };
 
   const toMovieDetail = item => {
+    console.log('first', item);
     setSelectMovie(item.id);
     props.navigation.navigate('MovieDetail', {
       id: item.id,
@@ -109,27 +125,10 @@ export default function ViewAll(props) {
         {/* <Dropdown /> */}
         <Text style={styles.titileTop}> List Movie</Text>
         <View style={styles.filter}>
-          {/* Dropdown Picker */}
-          <View style={styles.sort}>
-            <DropDownPicker
-              style={styles.dropdownSort}
-              placeholder="Sort"
-              open={openDropdown}
-              value={value}
-              items={items}
-              setOpen={setOpenDropdown}
-              setValue={setValue}
-              setItems={setItems}
-            />
-          </View>
-          {/* End Dropdown Picker */}
-
-          <TextInput
-            style={styles.search}
-            placeholder="Search Movie Name ..."
-          />
+          <Sort sort={handleSort} />
+          <SearchName search={handleSearch} />
         </View>
-        <Month />
+        <Month sortMonth={handleMonth} />
       </>
     );
   };
@@ -138,49 +137,44 @@ export default function ViewAll(props) {
     <View style={styles.wrapper}>
       <View style={styles.container}>
         <FlatList
-          numColumns={2}
           data={data}
+          numColumns="2"
           ListHeaderComponent={ListHeader}
-          keyExtractor={item => item}
+          keyExtractor={item => item.id}
           renderItem={({item}) => (
-            <View style={styles.wrappercard}>
-              <View style={styles.card}>
-                <Image
-                  style={styles.imagepic}
-                  source={{
-                    uri: `https://res.cloudinary.com/erikasempana/image/upload/v1655692721/${item.image}`,
-                    // uri: `${CLOUDINARY_URL + profile.image}`,
-                  }}
-                />
+            <View style={styles.card}>
+              <Image
+                style={styles.imagepic}
+                source={{
+                  uri: `https://res.cloudinary.com/erikasempana/image/upload/v1655692721/${item.image}`,
+                  // uri: `${CLOUDINARY_URL + profile.image}`,
+                }}
+              />
 
-                <View style={styles.content}>
-                  <Text style={styles.title}>{item.name}</Text>
-                  <Text style={styles.category}>{item.category}</Text>
-                  <TouchableOpacity
-                    // disabled={
-                    //   item.id === selectMovie ? disabled : setDisabled(false)
-                    // }
-                    onPress={toMovieDetail(item)}
+              <View style={styles.content}>
+                <Text style={styles.title}>{item.name}</Text>
+                <Text style={styles.category}>{item.category}</Text>
+                <TouchableOpacity
+                  onPress={() => toMovieDetail(item)}
+                  style={[
+                    item.id === selectMovie
+                      ? styles.detailPress
+                      : styles.detail,
+                  ]}>
+                  <Text
                     style={[
                       item.id === selectMovie
-                        ? styles.detailPress
-                        : styles.detail,
+                        ? styles.detailTextPress
+                        : styles.detailText,
                     ]}>
-                    <Text
-                      style={[
-                        item.id === selectMovie
-                          ? styles.detailTextPress
-                          : styles.detailText,
-                      ]}>
-                      Detail
-                    </Text>
-                  </TouchableOpacity>
-                </View>
+                    Detail
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
           )}
-          onRefresh={handleRefresh}
           refreshing={refresh}
+          onRefresh={handleRefresh}
           onEndReached={handleLoadMore}
           onEndReachedThreshold={0.1}
           ListFooterComponent={() =>

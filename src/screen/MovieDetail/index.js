@@ -49,10 +49,12 @@ export default function MovieDetail(props) {
   }, []);
 
   useEffect(() => {
-    setTimeout(() => {
-      getScheduleMovie();
-    }, 2000);
-  }, [page]);
+    // setTimeout(() => {
+    getScheduleMovie();
+    getDetailMovie();
+    console.log(id);
+    // }, 2000);
+  }, [page, id]);
 
   const changeDataBooking = data => {
     setDataDetailOrder({...dataDetailOrder, ...data});

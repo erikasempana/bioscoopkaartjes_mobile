@@ -1,9 +1,12 @@
 import axios from '../../utils/axios';
 
-export const getAllMovie = page => {
+export const getAllMovie = params => {
   return {
     type: 'GET_ALL_MOVIE',
-    payload: axios.get(`movie/?page=${page}&limit=4`),
+    payload: axios.get(
+      `movie/?limit=4&page=${params.page}&sort=${params.sort}&sortBy=${params.sortBy}&searchRelease=${params.releaseDate}&searchName=${params.searchName}`,
+    ),
+    // payload: axios.get(`movie/?page=${page}&limit=4`),
   };
 };
 

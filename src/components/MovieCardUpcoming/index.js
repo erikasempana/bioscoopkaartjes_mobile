@@ -11,10 +11,18 @@ export default function MovieCard(props) {
   const dispatch = useDispatch();
   const upComingMovie = useSelector(state => state.movieUpcoming.data);
 
-  // console.log('DATAA', upComingMovie);
   const getUpComingMovie = async () => {
     try {
       const params = new Date().getMonth() + 1;
+      await dispatch(GetMovieUpcoming(params));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getMovieByMonth = async () => {
+    try {
+      const params = props.monthId;
       await dispatch(GetMovieUpcoming(params));
     } catch (error) {
       console.log(error);

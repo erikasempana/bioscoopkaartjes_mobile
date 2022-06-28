@@ -24,16 +24,22 @@ export default function Month(props) {
     {id: 12, month: 'December'},
   ];
 
+  console.log(props.data);
+
   var touchButton = {
     activeOpacity: 1,
     underlayColor: '#5F2EEA',
   };
   const handlePressButton = async item => {
     try {
-      setSortMonth(item.id);
-      const params = item.id;
-      await dispatch(GetMovieUpcoming(params));
-      setDisabled(true);
+      //pemanggilan fungsi
+      props.sortMonth(item.id);
+      await dispatch(GetMovieUpcoming(item.id));
+
+      // setSortMonth(item.id);
+      // const params = item.id;
+      // await dispatch(getAllMovieMonth(item.id));
+      // setDisabled(true);
       // // console.log('upcomingmovie', resultUpComingMovie.data.data);
       // setUpComingMovie(resultUpComingMovie.data.data);
     } catch (error) {
@@ -41,29 +47,15 @@ export default function Month(props) {
     }
   };
 
-  // const handleMonth = async () => {
-  //   try {
-  //     const id = props.route.params.id;
-  //     const resultUpComingMovie = await axios.get(`movie/?searchRelease=${id}`);
-  //     // console.log(
-  //     //   'upcomingmovie',
-  //     //   resultUpComingMovie.action.payload.data.data,
-  //     // );
-  //     setUpComingMovie(resultUpComingMovie.action.payload.data.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   return (
     <ScrollView horizontal={true}>
       <View style={styles.container}>
-        {monthList.map((item, idx) => (
+        {monthList.map(item => (
           <TouchableOpacity
             // disabled={item.id === sortMonth ? disabled : false}
             {...touchButton}
             key={item.id}
-            onPress={() => handlePressButton(item, idx)}
+            onPress={() => handlePressButton(item)}
             style={[
               item.id === sortMonth
                 ? styles.monthButtonPress

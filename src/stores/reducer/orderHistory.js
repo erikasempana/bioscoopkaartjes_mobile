@@ -2,7 +2,7 @@ const initialState = {
   isLoading: false,
   isError: false,
   msg: '',
-  data: {},
+  data: [],
 };
 
 const orderHistory = (state = initialState, action) => {
@@ -19,7 +19,7 @@ const orderHistory = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        data: {...action.payload.data.data},
+        data: action.payload.data.data,
         msg: action.payload.data.msg,
       };
     }
@@ -28,7 +28,7 @@ const orderHistory = (state = initialState, action) => {
         ...state,
         isLoading: false,
         isError: true,
-        data: {},
+        data: [],
         msg: action.payload.response.data.msg,
       };
     }
