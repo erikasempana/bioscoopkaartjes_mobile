@@ -27,22 +27,26 @@ function LoginScreen(props) {
     try {
       console.log(form);
       // const result = await axios.post('auth/login', form);
-      const result = await dispatch(loginAction(form));
-      await AsyncStorage.setItem('id', result.action.payload.data.data.id);
-      await AsyncStorage.setItem(
-        'token',
-        result.action.payload.data.data.token,
-      );
-      await AsyncStorage.setItem(
-        'refreshToken',
-        result.action.payload.data.data.refreshToken,
-      );
-      await dispatch(GetUserById(result.action.payload.data.data.id));
+      if (form.email === '' || form.password === '') {
+        alert('Please fill your email/password ');
+      } else {
+        const result = await dispatch(loginAction(form));
+        await AsyncStorage.setItem('id', result.action.payload.data.data.id);
+        await AsyncStorage.setItem(
+          'token',
+          result.action.payload.data.data.token,
+        );
+        await AsyncStorage.setItem(
+          'refreshToken',
+          result.action.payload.data.data.refreshToken,
+        );
+        await dispatch(GetUserById(result.action.payload.data.data.id));
 
-      ToastAndroid.show(result.action.payload.data.msg, ToastAndroid.SHORT);
-      props.navigation.replace('AppScreen', {
-        screen: 'Home',
-      });
+        ToastAndroid.show(result.action.payload.data.msg, ToastAndroid.SHORT);
+        props.navigation.replace('AppScreen', {
+          screen: 'Home',
+        });
+      }
     } catch (error) {
       console.log(error);
       ToastAndroid.show(error.response.data.msg, ToastAndroid.SHORT);

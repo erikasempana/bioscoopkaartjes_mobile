@@ -28,10 +28,20 @@ export default function RegisterScreen(props) {
   const handleRegister = async () => {
     try {
       // console.log(form);
-      const result = await axios.post('auth/register', form);
-      // console.log('result', result.data);
-      ToastAndroid.show('succes register', ToastAndroid.SHORT);
-      props.navigation.navigate('Login');
+      if (
+        form.firstName === '' ||
+        form.lastName === '' ||
+        form.noTelp === '' ||
+        form.email === '' ||
+        form.password === ''
+      ) {
+        alert('your detail form can not empty');
+      } else {
+        const result = await axios.post('auth/register', form);
+        // console.log('result', result.data);
+        ToastAndroid.show('succes register', ToastAndroid.SHORT);
+        props.navigation.navigate('Login');
+      }
     } catch (error) {
       console.log(error);
       ToastAndroid.show(error.response.data.msg, ToastAndroid.SHORT);

@@ -126,11 +126,9 @@ export default function Profile(props) {
         console.log(res.errorMessage);
       } else {
         const data = res.assets[0];
-        // console.log('res', res);
         setimageprev(data.uri);
         setImage(data);
         setBinaryImage(data.base64);
-        // console.log(data);
       }
     });
   };
@@ -149,11 +147,8 @@ export default function Profile(props) {
         console.log(res.errorMessage);
       } else {
         const data = res.assets[0];
-        console.log('res', res);
         setimageprev(data.uri);
         setImage(data);
-        // setBinaryImage(data.base64);
-        console.log(data);
       }
     });
   };
