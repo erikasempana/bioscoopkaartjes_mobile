@@ -71,6 +71,7 @@ export default function TicketResult(props) {
 
   useEffect(() => {
     handleDataTicket();
+    console.log(props.route.params.id);
   }, []);
 
   return (
@@ -104,7 +105,7 @@ export default function TicketResult(props) {
                   </Text>
                   <Text style={styles.detailName}>Count</Text>
                   <Text style={styles.detailValue}>
-                    {ticketDetail.seat.length} seats
+                    {ticketDetail.seat ? ticketDetail.seat.length : ''} seats
                   </Text>
                 </View>
                 <View style={styles.detailRight}>
@@ -120,7 +121,7 @@ export default function TicketResult(props) {
                   </Text>
                   <Text style={styles.detailName}>Seat</Text>
                   <Text style={styles.detailValue}>
-                    {ticketDetail.seat.toString() ?? ''}
+                    {ticketDetail.seat ? ticketDetail.seat : ''}
                   </Text>
                 </View>
               </View>
