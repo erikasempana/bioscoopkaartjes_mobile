@@ -104,17 +104,69 @@ export default StyleSheet.create({
     textAlign: 'center',
     paddingBottom: 20,
   },
-  input: {
-    borderRadius: 4,
-    backgroundColor: '#EFF0F6',
+  selectday: {
+    paddingLeft: 10,
     width: '100%',
     height: 48,
+    backgroundColor: '#EFF0F6',
+    marginRight: 55,
+    borderRadius: 10,
+    marginBottom: 10,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flex: 1,
+  },
+  iconCalendar: {
+    top: -2,
+  },
+  input: {
+    borderRadius: 4,
     color: '#4E4B66',
     fontSize: 14,
     fontWeight: '600',
-    padding: 5,
-    marginBottom: 10,
+    marginHorizontal: 15,
+    width: '100%',
   },
+  // dropdown
+  dropdownWrapper: {
+    display: 'flex',
+    backgroundColor: '#EFF0F6',
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 10,
+  },
+  rowTextStyle: {
+    color: '#4E4B66',
+    fontSize: 14,
+    fontWeight: '600',
+    backgroundColor: '#EFF0F6',
+  },
+  dropdownStyle: {
+    color: '#4E4B66',
+    fontSize: 14,
+    fontWeight: '600',
+    backgroundColor: '#EFF0F6',
+    width: 315,
+    borderRadius: 8,
+  },
+  iconLocation: {
+    right: -12,
+  },
+  buttonTextStyle: {
+    color: '#A9A9A9',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  dropdownButton: {
+    backgroundColor: 'transparent',
+    marginHorizontal: -17,
+    color: 'grey',
+  },
+
+  // end of dropdown
+
   scheduleCard: {
     marginTop: 40,
     backgroundColor: '#FFF',

@@ -43,15 +43,13 @@ export default function ViewAll(props) {
     getDataMovie();
   }, [page, releaseDate, searchName, sort]);
 
+  console.log(searchName);
   const getDataMovie = async () => {
     try {
       setDisabled(false);
       setRefresh(false);
       setLoading(false);
-      if (page <= totalPage) {
-        // const result = await dispatch(getAllMovie({page}));
-        // const result = await dispatch(getAllMovie(param));
-
+      if (page <= totalPage || totalPage === 0) {
         const result = await axios.get(
           `movie/?limit=4&page=${page}&sort=${sort}&sortBy=${sortBy}&searchRelease=${releaseDate}&searchName=${searchName}`,
         );
@@ -77,8 +75,7 @@ export default function ViewAll(props) {
 
   const handleSearch = text => {
     console.log('ARE YOU CALLING ME ?', text);
-    text = text;
-    setSearchName({text});
+    setSearchName(text);
   };
 
   const handleSort = sortItems => {
@@ -126,9 +123,9 @@ export default function ViewAll(props) {
         <Text style={styles.titileTop}> List Movie</Text>
         <View style={styles.filter}>
           <Sort sort={handleSort} />
-          <SearchName search={handleSearch} />
+          <SearchName search={handleSearch} searchName={searchName} />
         </View>
-        <Month sortMonth={handleMonth} />
+        <Month {...props} sortMonth={handleMonth} />
       </>
     );
   };

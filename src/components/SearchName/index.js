@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {TextInput, View} from 'react-native';
 import styles from './styles';
 
 export default function SearchName(props) {
+  const [textSearch, setTextSearch] = useState(props.searchName);
+
   const handleSearch = text => {
-    props.search({text});
+    setTextSearch(text);
+    // props.search({text});
   };
 
   return (
@@ -13,7 +16,9 @@ export default function SearchName(props) {
         style={styles.search}
         placeholder="Search Movie Name ..."
         // defaultValue={props.searchName}
+        // onChangeText={handleSearch}
         onChangeText={text => handleSearch(text)}
+        onEndEditing={() => props.search(textSearch)}
       />
     </View>
   );

@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, Text, View, TouchableOpacity, Image} from 'react-native';
+import {
+  RefreshControl,
+  ScrollView,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {getBookingByUserId} from '../../stores/actions/booking';
 import styles from './styles';
@@ -10,11 +17,21 @@ import EbuId from '../../assets/images/ebuid.png';
 import Hiflix from '../../assets/images/hiflix.png';
 import cineone from '../../assets/images/cineone.png';
 
+const wait = timeout => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+};
+
 export default function OrderHistory(props) {
   const dispatch = useDispatch();
   const profile = useSelector(state => state.user.data);
   const [bookingId, setBookingId] = useState('');
   const dataOrderHistory = useSelector(state => state.orderHistory.data);
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
 
   useEffect(() => {
     historyBooking();
@@ -32,7 +49,6 @@ export default function OrderHistory(props) {
   const handleTicket = async item => {
     try {
       console.log('ITEM', item.id);
-      // setBookingId(item.id);
       props.navigation.navigate('TicketResult', {id: item.id});
     } catch (error) {
       console.log(error);
@@ -48,14 +64,17 @@ export default function OrderHistory(props) {
     if (time.length > 1) {
       // If time format correct
       time = time.slice(1); // Remove full string match value
-      time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
+      time[5] = +time[0] < 12 ? ' am' : ' pm'; // Set AM/PM
       time[0] = +time[0] % 12 || 12; // Adjust hours
     }
     return time.join(''); // return adjusted time or original string
   };
 
   return (
-    <ScrollView>
+    <ScrollView
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
       <View style={styles.wrapper}>
         <View style={styles.container}>
           {dataOrderHistory.map(item => (

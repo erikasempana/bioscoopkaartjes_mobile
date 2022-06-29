@@ -14,10 +14,10 @@ export const UpdateProfile = (id, form) => {
   };
 };
 
-export const UpdateImage = (id, form) => {
+export const UpdateImage = (id, body) => {
   return {
     type: 'UPDATE_IMAGE',
-    payload: axios.patch(`user/image/${id}`, form),
+    payload: axios.patch(`user/image/${id}`, body),
   };
 };
 

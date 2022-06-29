@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, RefreshControl} from 'react-native';
 import styles from './styles';
 import TagLine from '../../assets/images/nearest.png';
 import ImageJumbotron from '../../assets/images/group.png';
@@ -10,8 +10,19 @@ import MovieCardUpcoming from '../../components/MovieCardUpcoming';
 import Membership from '../../components/Membership';
 import Footer from '../../components/Footer';
 
+const wait = timeout => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+};
+
 export default function Home(props) {
   const [monthId, setMonthId] = useState('');
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
   const toViewAll = () => {
     props.navigation.navigate('ViewAll');
   };
@@ -24,7 +35,10 @@ export default function Home(props) {
   console.log(monthId);
 
   return (
-    <ScrollView>
+    <ScrollView
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
       <View style={styles.wrapper}>
         <View style={styles.container}>
           <View style={styles.section1}>
@@ -61,7 +75,7 @@ export default function Home(props) {
             </View>
           </View>
         </View>
-        <Month sortMonth={handleMonthId} />
+        <Month {...props} sortMonth={handleMonthId} />
         <MovieCardUpcoming {...props} monthId />
       </View>
       <Membership />

@@ -1,6 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+  RefreshControl,
+} from 'react-native';
 import styles from './styles';
 import dayjs from 'dayjs';
 
@@ -11,19 +18,37 @@ import {
   updateStatusBooking,
 } from '../../stores/actions/booking';
 
+const wait = timeout => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+};
+
 export default function TicketResult(props) {
   const dispatch = useDispatch();
+  const id = props.route.params.id;
   const [bookingId, setBookingId] = useState('');
   const ticketDetail = useSelector(state => state.bookingById.data);
+  const [dataTicket, setDataTicket] = useState('');
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
 
   useEffect(() => {
     handleDataTicket();
+    console.log('bookingId', id);
   }, []);
+
+  console.log('ticket', ticketDetail);
+  console.log('ticketData', dataTicket);
 
   const handleDataTicket = async () => {
     try {
-      const id = props.route.params.id;
-      await dispatch(getBookingById(id));
+      console.log('ID', id);
+      const result = await dispatch(getBookingById(id));
+      console.log('first', result);
+      setDataTicket(result.action.payload.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -31,7 +56,6 @@ export default function TicketResult(props) {
 
   const handleStatusTickets = async () => {
     try {
-      const id = props.route.params.id;
       await dispatch(updateStatusBooking(id));
       setBookingId(props.route.params.id);
     } catch (error) {
@@ -71,7 +95,10 @@ export default function TicketResult(props) {
   };
 
   return (
-    <ScrollView>
+    <ScrollView
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
       <View style={styles.wrapper}>
         <View style={styles.container}>
           <View style={styles.cardQr}>

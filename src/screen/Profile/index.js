@@ -12,16 +12,29 @@ import {
   Alert,
   Modal,
   Pressable,
+  RefreshControl,
 } from 'react-native';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-picker';
+import {PermissionsAndroid} from 'react-native';
 import styles from './styles';
 
 // import User from '../../assets/images/user1.jpg';
 import Footer from '../../components/Footer';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {UpdatePassword, UpdateProfile} from '../../stores/actions/user';
+import {
+  GetUserById,
+  UpdateImage,
+  UpdatePassword,
+  UpdateProfile,
+} from '../../stores/actions/user';
 import Icon from 'react-native-vector-icons/Feather';
-// import ModalUpdateImage from '../../components/Modal.js';
+import DefaultImage from '../../assets/images/default.png';
+
+const wait = timeout => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+};
 
 export default function Profile(props) {
   const dispatch = useDispatch();
@@ -29,7 +42,11 @@ export default function Profile(props) {
   const refreshToken = useSelector(
     state => state.loginReducer.data.refreshToken,
   );
+  const [imageprev, setimageprev] = useState(profile.image);
+  const [image, setImage] = useState(profile.image);
+  const [binaryImage, setBinaryImage] = useState(profile.image);
   const [modalVisible, setModalVisible] = useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
   const [form, setForm] = useState({
     oldPassword: '',
     newPassword: '',
@@ -40,9 +57,11 @@ export default function Profile(props) {
     lastName: '',
     noTelp: '',
   });
-  const [image, setImage] = useState({
-    image: '',
-  });
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -73,9 +92,7 @@ export default function Profile(props) {
   const handleUpdatePassword = async () => {
     try {
       // const id = profile.id;
-      console.log(form);
       const result = await dispatch(UpdatePassword(form));
-      console.log('result Password', result);
       ToastAndroid.show(result.action.payload.data.msg, ToastAndroid.SHORT);
     } catch (error) {
       console.log(error);
@@ -94,16 +111,80 @@ export default function Profile(props) {
     }
   };
 
-  const handleUpdateImage = () => {
+  // UPDATE IMAGE
+  const openCamera = () => {
+    const option = {
+      mediaType: 'photo',
+      quality: 1,
+      includeBase64: true,
+      maxHeight: 1000,
+    };
+    launchCamera(option, res => {
+      if (res.didCancel) {
+        console.log('cancel image');
+      } else if (res.errorCode) {
+        console.log(res.errorMessage);
+      } else {
+        const data = res.assets[0];
+        // console.log('res', res);
+        setimageprev(data.uri);
+        setImage(data);
+        setBinaryImage(data.base64);
+        // console.log(data);
+      }
+    });
+  };
+
+  const openLibrary = () => {
+    const option = {
+      mediaType: 'photo',
+      quality: 1,
+      includeBase64: true,
+      maxHeight: 1000,
+    };
+    launchImageLibrary(option, res => {
+      if (res.didCancel) {
+        console.log('cencel image');
+      } else if (res.errorCode) {
+        console.log(res.errorMessage);
+      } else {
+        const data = res.assets[0];
+        console.log('res', res);
+        setimageprev(data.uri);
+        setImage(data);
+        // setBinaryImage(data.base64);
+        console.log(data);
+      }
+    });
+  };
+
+  const handleUpdateImage = async () => {
     try {
+      const id = profile.id;
       console.log('GANTI FOTO YUK');
+      const body = new FormData();
+      body.append('image', {
+        uri: image.uri,
+        type: image.type,
+        name: image.fileName,
+      });
+
+      const result = await dispatch(UpdateImage(id, body));
+      ToastAndroid.show(result.action.payload.data.msg, ToastAndroid.SHORT);
+      await dispatch(GetUserById(id));
+      setModalVisible(!modalVisible);
     } catch (error) {
       console.log(error);
+      ToastAndroid.show(error.response.data.msg, ToastAndroid.SHORT);
     }
   };
   return (
-    <ScrollView>
+    <ScrollView
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
       <View style={styles.wrapper}>
+        {/* MODAL UPDATE IMAGE */}
         <View style={styles.centeredView}>
           <Modal
             animationType="slide"
@@ -115,11 +196,34 @@ export default function Profile(props) {
             }}>
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
-                <Text style={styles.modalText}>Change Image ?</Text>
+                <Text style={styles.modalText}>Change Image Profile</Text>
+                <Image
+                  source={{uri: imageprev}}
+                  style={{
+                    width: 120,
+                    height: 120,
+                    borderRadius: 120,
+                  }}
+                />
+                <Pressable
+                  style={[styles.buttonModal, styles.buttonModalClose]}
+                  onPress={() => handleUpdateImage()}>
+                  <Text style={styles.textStyle}>OK</Text>
+                </Pressable>
+                <Pressable
+                  style={[styles.buttonModal, styles.buttonModalClose]}
+                  onPress={openCamera}>
+                  <Text style={styles.textStyle}>Open Camera</Text>
+                </Pressable>
+                <Pressable
+                  style={[styles.buttonModal, styles.buttonModalClose]}
+                  onPress={openLibrary}>
+                  <Text style={styles.textStyle}>Image Library</Text>
+                </Pressable>
                 <Pressable
                   style={[styles.buttonModal, styles.buttonModalClose]}
                   onPress={() => setModalVisible(!modalVisible)}>
-                  <Text style={styles.textStyle}>Hide Modal</Text>
+                  <Text style={styles.textStyle}>Close</Text>
                 </Pressable>
               </View>
             </View>
@@ -139,7 +243,7 @@ export default function Profile(props) {
               />
             </TouchableOpacity>
             <Text style={styles.userName}>
-              {profile.firstName + profile.lastName}
+              {profile.firstName} {profile.lastName}
             </Text>
             <Text style={styles.userDetail}>Moviegoers</Text>
             <View style={styles.lineStyle} />
@@ -207,7 +311,7 @@ export default function Profile(props) {
               <TextInput
                 secureTextEntry={true}
                 style={styles.input}
-                placeholder={form.oldPassword ? form.oldPasswowrd : ''}
+                placeholder={'Input your old password'}
                 onChangeText={text => handleChangeForm(text, 'oldPassword')}
               />
             </View>
@@ -216,7 +320,7 @@ export default function Profile(props) {
               <TextInput
                 secureTextEntry={true}
                 style={styles.input}
-                placeholder={form.newPassword ? form.newPassword : ''}
+                placeholder={'Input your new password'}
                 onChangeText={text => handleChangeForm(text, 'newPassword')}
               />
             </View>
@@ -225,7 +329,7 @@ export default function Profile(props) {
               <TextInput
                 secureTextEntry={true}
                 style={styles.input}
-                placeholder={form.confirmPassword ? form.confirmPassword : ''}
+                placeholder={'Input your confirm password'}
                 onChangeText={text => handleChangeForm(text, 'confirmPassword')}
               />
             </View>

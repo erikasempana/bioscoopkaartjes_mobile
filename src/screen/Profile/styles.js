@@ -9,7 +9,6 @@ export default StyleSheet.create({
     paddingTop: 30,
     paddingEnd: 20,
     paddingStart: 20,
-    minHeight: 910,
   },
   card: {
     backgroundColor: '#FFF',
@@ -168,6 +167,7 @@ export default StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
+    width: 300,
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
@@ -183,9 +183,12 @@ export default StyleSheet.create({
     elevation: 5,
   },
   buttonModal: {
+    width: '100%',
     borderRadius: 20,
     padding: 10,
     elevation: 2,
+    marginVertical: 5,
+    paddingVertical: 15,
   },
   buttonModalOpen: {
     backgroundColor: '#F194FF',

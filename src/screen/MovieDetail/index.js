@@ -19,12 +19,13 @@ import Icon from 'react-native-vector-icons/Feather';
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import Footer from '../../components/Footer';
 import dayjs from 'dayjs';
+import DatePicker from 'react-native-date-picker';
 
 import DefaultPict from '../../assets/images/default.png';
 
 // Select Dropdown
-// import SelectDropdown from 'react-native-select-dropdown';
-// const location = ['Jakarta', 'Bandung', 'Bogor', 'Bekasi', 'Depok'];
+import SelectDropdown from 'react-native-select-dropdown';
+const location = ['DKI Jakarta', 'Bandung', 'Bogor', 'Tangerang', 'Lampung'];
 
 export default function MovieDetail(props) {
   const id = props.route.params.id;
@@ -38,9 +39,11 @@ export default function MovieDetail(props) {
   const [loading, setLoading] = useState(false);
   const [last, setLast] = useState(false);
   const [loadMore, setLoadMore] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState('');
+  const [dateBooking, setDateBooking] = useState(new Date());
+  const [openCalender, setOpenCalender] = useState(false);
   const [dataDetailOrder, setDataDetailOrder] = useState({
     movieId: id,
-    dateBooking: new Date().toISOString().split('T')[0],
   });
 
   useEffect(() => {
@@ -49,15 +52,16 @@ export default function MovieDetail(props) {
   }, []);
 
   useEffect(() => {
-    // setTimeout(() => {
     getScheduleMovie();
     getDetailMovie();
-    console.log(id);
-    // }, 2000);
   }, [page, id]);
 
   const changeDataBooking = data => {
-    setDataDetailOrder({...dataDetailOrder, ...data});
+    setDataDetailOrder({
+      ...dataDetailOrder,
+      ...data,
+      dateBooking: dateBooking.toISOString().split('T')[0],
+    });
     console.log('TOUCH BY YOU', data);
   };
 
@@ -78,36 +82,6 @@ export default function MovieDetail(props) {
       console.log(error);
     }
   };
-
-  // const getScheduleMovie = async () => {
-  //   try {
-  //     setRefresh(false);
-  //     setLoading(false);
-  //     setLoadMore(false);
-  //     if (page <= totalPage) {
-  //       const resultSchedulelMovie = await dispatch(getAllSchedule(page));
-  //       // console.log(
-  //       //   'DATA SCHEDULE',
-  //       //   resultSchedulelMovie.action.payload.data.data,
-  //       // );
-  //       if (page === 1) {
-  //       } else {
-  //         setScheduleMovie(
-  //           ...scheduleMovie,
-  //           ...resultSchedulelMovie.action.payload.data.data,
-  //         );
-  //       }
-  //       setTotalPage(
-  //         resultSchedulelMovie.action.payload.data.pagination.totalPage,
-  //       );
-  //     } else {
-  //       setLast(true);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   const handleRefresh = () => {
     console.log('REFRESH SCREEN');
     setPage(1);
@@ -226,20 +200,71 @@ export default function MovieDetail(props) {
         </View>
         <View style={styles.wrapperShowTime}>
           <Text style={styles.showtimeTitle}>Showtimes and Tickets</Text>
-          <TextInput
-            icon={({color, size}) => (
-              <Icon color={color} size={12} name="calendar" />
-            )}
-            style={styles.input}
-            placeholder="Set a date"
-          />
-          <TextInput
-            icon={({color, size}) => (
-              <IconEntypo color={color} size={size} name="location" />
-            )}
-            style={styles.input}
-            placeholder="Set a location"
-          />
+
+          {/* date picker */}
+          <View>
+            <TouchableOpacity
+              style={styles.selectday}
+              onPress={() => setOpenCalender(true)}>
+              <View style={styles.iconCalendar}>
+                <Icon color={'grey'} size={20} name="calendar" />
+              </View>
+              <View style={styles.input}>
+                <TextInput
+                  editable={false}
+                  placeholder={`${dayjs(dateBooking).format('YYYY-MM-DD')}`}
+                />
+              </View>
+            </TouchableOpacity>
+            <DatePicker
+              modal
+              mode="date"
+              textColor="blue"
+              androidPickerMode="spinner"
+              open={openCalender}
+              date={dateBooking}
+              onConfirm={date => {
+                setOpenCalender(false);
+                setDateBooking(date);
+              }}
+              onDateChange={setDataDetailOrder(dateBooking)}
+              onCancel={() => {
+                setOpenCalender(false);
+              }}
+            />
+          </View>
+          {/*end of date picker */}
+
+          {/* Select Dropdown */}
+          <TouchableOpacity style={styles.dropdownWrapper}>
+            <View style={styles.iconLocation}>
+              <IconEntypo color={'#797979'} size={20} name="location" />
+            </View>
+            <View>
+              <SelectDropdown
+                buttonTextStyle={styles.buttonTextStyle}
+                buttonStyle={styles.dropdownButton}
+                rowTextStyle={styles.rowTextStyle}
+                dropdownStyle={styles.dropdownStyle}
+                defaultButtonText="Set a location"
+                data={location}
+                onSelect={(selectedItem, index) => {
+                  setSelectedLocation(selectedItem);
+                }}
+                buttonTextAfterSelection={(selectedItem, index) => {
+                  // text represented after item is selected
+                  // if data array is an array of objects then return selectedItem.property to render after item is selected
+                  return selectedItem;
+                }}
+                rowTextForSelection={(item, index) => {
+                  // text represented for each item in dropdown
+                  // if data array is an array of objects then return item.property to represent item in dropdown
+                  return item;
+                }}
+              />
+            </View>
+          </TouchableOpacity>
+          {/* End Select Dropdown */}
         </View>
       </>
     );
@@ -265,7 +290,7 @@ export default function MovieDetail(props) {
                         changeDataBooking({
                           timeBooking: itemTime,
                           scheduleId: el.id,
-                          // premiere:
+                          dateBooking: dateBooking.toISOString().split('T')[0],
                         })
                       }>
                       <Text
@@ -274,27 +299,9 @@ export default function MovieDetail(props) {
                       </Text>
                     </TouchableOpacity>
                   ))}
-                  {/* {el.time} */}
-                  {/* <FlatList
-                data={el.time.split(',')}
-                keyExtractor={itemTime => itemTime}
-                renderItem={({itemTime}) => (
-                  <TouchableOpacity
-                    style={styles.time}
-                    onPress={() =>
-                      changeDataBooking({
-                        timeBooking: itemTime,
-                        scheduleId: el.id,
-                      })
-                    }>
-                    {itemTime}
-                  </TouchableOpacity>
-                )}
-              /> */}
                 </View>
                 <View style={styles.priceWrapper}>
                   <Text style={styles.priceName}>Price</Text>
-                  {/* <Text style={styles.priceValue}>{rupiah(el.price)}/seat</Text> */}
                   <Text style={styles.priceValue}>
                     {convertToRupiah(el.price)}/seat
                   </Text>
@@ -307,71 +314,6 @@ export default function MovieDetail(props) {
               </View>
             ))}
 
-            {/* <FlatList
-          data={scheduleMovie}
-          ListHeaderComponent={ListHeader}
-          keyExtractor={el => el.id}
-          renderItem={({el}) => (
-            <View style={styles.scheduleCard}>
-              <Image style={styles.cinema} source={Ebuid} />
-              <Text style={styles.cinemaLocation}>{el.location}</Text>
-              <View style={styles.lineStyle} />
-              <View style={styles.timeWrapper}>
-                <FlatList
-                  data={el.time.split(',')}
-                  keyExtractor={itemTime => itemTime}
-                  renderItem={({itemTime}) => (
-                    <TouchableOpacity
-                      style={styles.time}
-                      onPress={() =>
-                        changeDataBooking({
-                          timeBooking: itemTime,
-                          scheduleId: el.id,
-                        })
-                      }>
-                      {itemTime}
-                    </TouchableOpacity>
-                  )}
-                />
-                <Text style={styles.time}>08:30am</Text>
-                <Text style={styles.time}>08:30am</Text>
-                <Text style={styles.time}>08:30am</Text>
-                <Text style={styles.time}>08:30am</Text>
-                <Text style={styles.time}>08:30am</Text>
-                <Text style={styles.time}>08:30am</Text>
-                <Text style={styles.time}>08:30am</Text>
-                <Text style={styles.time}>08:30am</Text>
-              </View>
-              <View style={styles.priceWrapper}>
-                <Text style={styles.priceName}>Price</Text>
-                <Text style={styles.priceValue}>{rupiah(el.priece)}/seat</Text>
-              </View>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => handleBookNow(el.price)}>
-                <Text style={styles.buttonText}>Book now</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-          onRefresh={handleRefresh}
-          refreshing={refresh}
-          onEndReached={handleLoadMore}
-          onEndReachedThreshold={0.1}
-          ListFooterComponent={() =>
-            last ? (
-              <>
-                <View style={styles.viewMoreWrapper}>
-                  <View style={styles.viewMoreLine} />
-                  <Text style={styles.viewMoreText}>no more data</Text>
-                  <View style={styles.viewMoreLine} />
-                </View>
-                <Footer {...props} />
-              </>
-            ) : loading ? (
-              <ActivityIndicator size="large" color="blue" />
-            ) : null
-          }
-        /> */}
             <View style={styles.viewMoreWrapper}>
               <View style={styles.viewMoreLine} />
               <Text style={styles.viewMoreText}>no more data</Text>

@@ -32,16 +32,12 @@ export default function Month(props) {
   };
   const handlePressButton = async item => {
     try {
-      //pemanggilan fungsi
-      props.sortMonth(item.id);
-      await dispatch(GetMovieUpcoming(item.id));
-
-      // setSortMonth(item.id);
-      // const params = item.id;
-      // await dispatch(getAllMovieMonth(item.id));
-      // setDisabled(true);
-      // // console.log('upcomingmovie', resultUpComingMovie.data.data);
-      // setUpComingMovie(resultUpComingMovie.data.data);
+      if (props.route.name === 'Home') {
+        await dispatch(GetMovieUpcoming(item.id));
+      } else if (props.route.name === 'ViewAll') {
+        //pemanggilan fungsi props
+        props.sortMonth(item.id);
+      }
     } catch (error) {
       console.log(error);
     }
