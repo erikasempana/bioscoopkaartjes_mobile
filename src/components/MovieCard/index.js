@@ -16,7 +16,6 @@ export default function MovieCard(props) {
     try {
       const month = new Date().getMonth();
       const resultNowShowing = await dispatch(GetMovieNowShowing(month));
-      // console.log('result', resultNowShowing.action.payload.data.data);
       setNowShowing(resultNowShowing.action.payload.data.data);
     } catch (error) {
       console.log(error.response);
@@ -33,29 +32,41 @@ export default function MovieCard(props) {
   return (
     <ScrollView horizontal={true}>
       <View style={styles.container}>
-        {nowShowing.map(item => (
-          <View key={item.id} style={styles.card}>
-            <Image
-              style={styles.imagepic}
-              source={
-                item.image
-                  ? {
-                      uri: `https://res.cloudinary.com/erikasempana/image/upload/v1655692721/${item.image}`,
-                    }
-                  : Moviepict
-              }
-            />
-            <View style={styles.content}>
-              <Text style={styles.title}>{item.name}</Text>
-              <Text style={styles.category}>{item.category}</Text>
-              <TouchableOpacity
-                style={styles.detail}
-                onPress={() => toMovieDetail(item)}>
-                <Text style={styles.detailText}>Detail</Text>
-              </TouchableOpacity>
+        {nowShowing[0] ? (
+          nowShowing.map(item => (
+            <View key={item.id} style={styles.card}>
+              <Image
+                style={styles.imagepic}
+                source={
+                  item.image
+                    ? {
+                        uri: `https://res.cloudinary.com/erikasempana/image/upload/v1655692721/${item.image}`,
+                      }
+                    : Moviepict
+                }
+              />
+              <View style={styles.content}>
+                <Text style={styles.title}>{item.name}</Text>
+                <Text style={styles.category}>{item.category}</Text>
+                <TouchableOpacity
+                  style={styles.detail}
+                  onPress={() => toMovieDetail(item)}>
+                  <Text style={styles.detailText}>Detail</Text>
+                </TouchableOpacity>
+              </View>
             </View>
+          ))
+        ) : (
+          <View style={{textAlign: 'center', marginHorizontal: 100}}>
+            <Text
+              style={{
+                color: 'grey',
+                fontSize: 14,
+              }}>
+              THERE IS NO MOVIE
+            </Text>
           </View>
-        ))}
+        )}
       </View>
     </ScrollView>
   );
