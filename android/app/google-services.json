@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1076146266344",
+    "project_id": "bioscoopkaartjes-c1573",
+    "storage_bucket": "bioscoopkaartjes-c1573.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1076146266344:android:d8aeb572f125e8d042695d",
+        "android_client_info": {
+          "package_name": "com.bioscoopkaartjes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1076146266344-s4e3sohegffhvds5p661ba6uo0n4obip.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLxNM1eBy-2FASpktrKiRmm50kRgvmc5E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1076146266344-s4e3sohegffhvds5p661ba6uo0n4obip.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

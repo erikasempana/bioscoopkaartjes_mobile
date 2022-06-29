@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import axios from '../../utils/axios';
-import {getAllMovie, getAllMovieMonth} from '../../stores/actions/movie';
 import {
   ActivityIndicator,
   Image,
@@ -15,8 +14,6 @@ import Month from '../../components/Month';
 import Footer from '../../components/Footer';
 import SearchName from '../../components/SearchName';
 
-// Dropdown Picker
-import DropDownPicker from 'react-native-dropdown-picker';
 import Sort from '../../components/Sort';
 
 export default function ViewAll(props) {

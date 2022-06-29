@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   Image,
@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import styles from './styles';
 import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat);
 
 import QRCode from '../../assets/images/QRCode.png';
 import Footer from '../../components/Footer';
@@ -18,33 +20,18 @@ import {
   updateStatusBooking,
 } from '../../stores/actions/booking';
 
-const wait = timeout => {
-  return new Promise(resolve => setTimeout(resolve, timeout));
-};
-
 export default function TicketResult(props) {
   const dispatch = useDispatch();
-  const id = props.route.params.id;
   const [bookingId, setBookingId] = useState('');
   const ticketDetail = useSelector(state => state.bookingById.data);
-  const [dataTicket, setDataTicket] = useState('');
-  const [refreshing, setRefreshing] = React.useState(false);
-
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    wait(2000).then(() => setRefreshing(false));
-  }, []);
-
-  useEffect(() => {
-    handleDataTicket();
-    console.log('bookingId', id);
-  }, []);
+  const [dataTicket, setDataTicket] = useState({});
 
   console.log('ticket', ticketDetail);
-  console.log('ticketData', dataTicket);
+  // console.log('ticketData', dataTicket);
 
   const handleDataTicket = async () => {
     try {
+      const id = props.route.params.id;
       console.log('ID', id);
       const result = await dispatch(getBookingById(id));
       console.log('first', result);
@@ -56,6 +43,8 @@ export default function TicketResult(props) {
 
   const handleStatusTickets = async () => {
     try {
+      const id = props.route.params.id;
+      console.log('ID', id);
       await dispatch(updateStatusBooking(id));
       setBookingId(props.route.params.id);
     } catch (error) {
@@ -79,26 +68,13 @@ export default function TicketResult(props) {
         .join('')
     );
   };
-  const tConvert = time => {
-    // Check correct time format and split into components
-    time = time
-      .toString()
-      .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
 
-    if (time.length > 1) {
-      // If time format correct
-      time = time.slice(1); // Remove full string match value
-      time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
-      time[0] = +time[0] % 12 || 12; // Adjust hours
-    }
-    return time.join(''); // return adjusted time or original string
-  };
+  useEffect(() => {
+    handleDataTicket();
+  }, []);
 
   return (
-    <ScrollView
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }>
+    <ScrollView refreshControl={<RefreshControl />}>
       <View style={styles.wrapper}>
         <View style={styles.container}>
           <View style={styles.cardQr}>
@@ -138,11 +114,13 @@ export default function TicketResult(props) {
                   </Text>
                   <Text style={styles.detailName}>Time</Text>
                   <Text style={styles.detailValue}>
-                    {tConvert(ticketDetail.timeBooking)}
+                    {dayjs(ticketDetail.timeBooking, 'HH:mm:ss').format(
+                      'hh:mm a',
+                    )}
                   </Text>
                   <Text style={styles.detailName}>Seat</Text>
                   <Text style={styles.detailValue}>
-                    {ticketDetail.seat.toString()}
+                    {ticketDetail.seat.toString() ?? ''}
                   </Text>
                 </View>
               </View>

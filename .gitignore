@@ -60,5 +60,8 @@ buck-out/
 /ios/Pods/
 /vendor/bundle/
 
-# environtment
+# environment
 .env
+.env.development
+.env.production
+.env.staging

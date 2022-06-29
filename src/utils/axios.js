@@ -1,12 +1,12 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import config from '../../config';
+import Config from 'react-native-config';
 
 const axiosApiIntances = axios.create({
   // baseURL: 'http://192.168.43.230:3001', // untuk lokal ip:portbackend (di config)
   // baseURL: 'https://project-tickitz.herokuapp.com/',
   baseURL: 'https://bioscoopkaartjes.herokuapp.com/',
-  // baseURL: config.BASE_URL,
+  // baseURL: Config.BASE_URL,
 });
 
 // Add a request interceptor
