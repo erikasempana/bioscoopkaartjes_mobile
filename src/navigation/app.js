@@ -23,6 +23,7 @@ import HeaderProfile from '../components/HeaderProfile';
 import Counter from '../screen/Counter';
 import ListMovie from '../screen/ListMovie';
 import MidtransView from '../screen/MidtransView';
+import Notification from '../screen/Notification';
 
 function HomeNavigator() {
   return (
@@ -172,6 +173,17 @@ export default function AppNavigator() {
           header: props => <Header {...props} />,
           drawerIcon: ({size, color}) => {
             <Icon name="user" size={size} color={color} />;
+          },
+        }}
+      />
+      <Drawer.Screen
+        component={Notification}
+        name="Notification"
+        options={{
+          title: 'Notification',
+          header: props => <Header {...props} />,
+          drawerIcon: ({size, color}) => {
+            <Icon name="bell" size={size} color={color} />;
           },
         }}
       />
