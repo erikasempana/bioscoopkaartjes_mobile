@@ -229,6 +229,12 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            storeFile file('bioscoopkaartjesapp.keystore')
+            storePassword 'racundunia25'
+            keyAlias 'bioscoopkaartjes'
+            keyPassword 'racundunia25'
+   }
     }
     buildTypes {
         debug {
