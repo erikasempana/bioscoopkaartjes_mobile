@@ -18,8 +18,10 @@ import styles from './styles';
 import Icon from 'react-native-vector-icons/Feather';
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import Footer from '../../components/Footer';
-import dayjs from 'dayjs';
 import DatePicker from 'react-native-date-picker';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat);
 
 import DefaultPict from '../../assets/images/default.png';
 
@@ -46,6 +48,8 @@ export default function MovieDetail(props) {
     movieId: id,
   });
   const [selectedTime, setSelectedTime] = useState('');
+  const [selectedPremiereId, setselectedPremiereId] = useState('');
+  const [dataDateBooking, setDataDateBooking] = useState('');
 
   useEffect(() => {
     getDetailMovie();
@@ -64,7 +68,10 @@ export default function MovieDetail(props) {
       dateBooking: dateBooking.toISOString().split('T')[0],
     });
     setSelectedTime(data.timeBooking);
+    setselectedPremiereId(data.scheduleId);
   };
+  console.log(dataDetailOrder);
+
   const getDetailMovie = async () => {
     try {
       await dispatch(getMovieById(id));
@@ -125,33 +132,24 @@ export default function MovieDetail(props) {
     );
   };
 
-  const tConvert = time => {
-    // Check correct time format and split into components
-    time = time
-      .toString()
-      .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
-
-    if (time.length > 1) {
-      // If time format correct
-      time = time.slice(1); // Remove full string match value
-      time[5] = +time[0] < 12 ? ' am' : ' pm'; // Set AM/PM
-      time[0] = +time[0] % 12 || 12; // Adjust hours
-    }
-    return time.join(''); // return adjusted time or original string
-  };
-
   const handleBookNow = async price => {
     try {
+      const scheduleId = selectedPremiereId;
       const body = {
-        ...dataDetailOrder,
+        movieId: id,
         price,
+        scheduleId,
+        selectedTime,
+        dataDateBooking,
       };
-      console.log('price', dataDetailOrder);
-      const scheduleId = dataDetailOrder.scheduleId;
       await dispatch(dataOrder(body));
-      const result = await dispatch(getScheduleById(scheduleId));
-      console.log(result);
-      // props.navigation.replace('Order', {movieId: id, price, scheduleId});
+      await dispatch(getScheduleById(scheduleId));
+      props.navigation.replace('Order', {
+        movieId: id,
+        price,
+        scheduleId,
+        selectedTime,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -228,7 +226,8 @@ export default function MovieDetail(props) {
                 setOpenCalender(false);
                 setDateBooking(date);
               }}
-              onDateChange={setDataDetailOrder(dateBooking)}
+              // onDateChange={setDataDetailOrder(dateBooking)}
+              onDateChange={setDataDateBooking(dateBooking)}
               onCancel={() => {
                 setOpenCalender(false);
               }}
@@ -299,7 +298,7 @@ export default function MovieDetail(props) {
                             ? styles.timeChoose
                             : styles.time
                         }>
-                        {tConvert(itemTime)}
+                        {dayjs(itemTime, 'HH:mm').format('hh:mm a')}
                       </Text>
                     </TouchableOpacity>
                   ))}

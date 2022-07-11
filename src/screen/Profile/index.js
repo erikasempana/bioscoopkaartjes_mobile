@@ -258,6 +258,7 @@ export default function Profile(props) {
                 style={styles.input}
                 // editable={false}
                 selectTextOnFocus={false}
+                placeholderTextColor={'rgba(105, 111, 121, 0.8)'}
                 placeholder={profile.firstName}
                 onChangeText={text => handleChangeUser(text, 'firstName')}
               />
@@ -268,6 +269,7 @@ export default function Profile(props) {
                 style={styles.input}
                 // editable={false}
                 selectTextOnFocus={false}
+                placeholderTextColor={'rgba(105, 111, 121, 0.8)'}
                 placeholder={profile.lastName}
                 onChangeText={text => handleChangeUser(text, 'lastName')}
               />
@@ -278,6 +280,7 @@ export default function Profile(props) {
                 editable={false}
                 selectTextOnFocus={false}
                 style={styles.input}
+                placeholderTextColor={'rgba(105, 111, 121, 0.8)'}
                 placeholder={profile.email}
               />
             </View>
@@ -288,6 +291,7 @@ export default function Profile(props) {
               </View>
               <TextInput
                 style={styles.input1}
+                placeholderTextColor={'rgba(105, 111, 121, 0.8)'}
                 placeholder={profile.noTelp}
                 onChangeText={text => handleChangeUser(text, 'noTelp')}
               />
@@ -306,6 +310,7 @@ export default function Profile(props) {
               <TextInput
                 secureTextEntry={true}
                 style={styles.input}
+                placeholderTextColor={'rgba(105, 111, 121, 0.8)'}
                 placeholder={'Input your old password'}
                 onChangeText={text => handleChangeForm(text, 'oldPassword')}
               />
@@ -315,6 +320,7 @@ export default function Profile(props) {
               <TextInput
                 secureTextEntry={true}
                 style={styles.input}
+                placeholderTextColor={'rgba(105, 111, 121, 0.8)'}
                 placeholder={'Input your new password'}
                 onChangeText={text => handleChangeForm(text, 'newPassword')}
               />
@@ -324,6 +330,7 @@ export default function Profile(props) {
               <TextInput
                 secureTextEntry={true}
                 style={styles.input}
+                placeholderTextColor={'rgba(105, 111, 121, 0.8)'}
                 placeholder={'Input your confirm password'}
                 onChangeText={text => handleChangeForm(text, 'confirmPassword')}
               />

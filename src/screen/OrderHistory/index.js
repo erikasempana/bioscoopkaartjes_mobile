@@ -8,9 +8,11 @@ import {
   Image,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {getBookingByUserId} from '../../stores/actions/booking';
+import {getBookingById, getBookingByUserId} from '../../stores/actions/booking';
 import styles from './styles';
 import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat);
 
 import Footer from '../../components/Footer';
 import EbuId from '../../assets/images/ebuid.png';
@@ -49,25 +51,11 @@ export default function OrderHistory(props) {
   const handleTicket = async item => {
     try {
       console.log('ITEM', item.id);
+      await dispatch(getBookingById(item.id));
       props.navigation.navigate('TicketResult', {id: item.id});
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const tConvert = time => {
-    // Check correct time format and split into components
-    time = time
-      .toString()
-      .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
-
-    if (time.length > 1) {
-      // If time format correct
-      time = time.slice(1); // Remove full string match value
-      time[5] = +time[0] < 12 ? ' am' : ' pm'; // Set AM/PM
-      time[0] = +time[0] % 12 || 12; // Adjust hours
-    }
-    return time.join(''); // return adjusted time or original string
   };
 
   return (
@@ -95,7 +83,7 @@ export default function OrderHistory(props) {
               />
               <Text style={styles.schedule}>
                 {dayjs(item.dateBooking).format('ddd, MMM D YYYY')} -{' '}
-                {tConvert(item.timeBooking)}
+                {dayjs(item.timeBooking, 'HH:mm').format('hh:mm a')}
               </Text>
               <Text style={styles.movieTitle}>{item.name}</Text>
               <View style={styles.lineStyle} />

@@ -141,6 +141,9 @@ export default StyleSheet.create({
     backgroundColor: '#6E7191',
     borderRadius: 4,
   },
+  resetBtn: {
+    color: '#5F2EEA',
+  },
   cinema: {
     bottom: -25,
     fontSize: 45,
@@ -173,10 +176,12 @@ export default StyleSheet.create({
   },
   info1: {
     flex: 2,
+    color: '#6B6B6B',
   },
   info2: {
     flex: 1,
     textAlign: 'right',
+    color: '#14142B',
   },
   lineStyle: {
     borderWidth: 0.5,

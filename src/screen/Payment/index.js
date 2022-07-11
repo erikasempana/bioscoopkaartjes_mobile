@@ -89,12 +89,17 @@ export default function Payment(props) {
               <Text style={styles.inputlabel}>Full Name</Text>
               <TextInput
                 style={styles.input}
+                placeholderTextColor={'rgba(105, 111, 121, 0.8)'}
                 placeholder={profile.firstName + ' ' + profile.lastName}
               />
             </View>
             <View style={styles.inputWrapper}>
               <Text style={styles.inputlabel}>Email</Text>
-              <TextInput style={styles.input} placeholder={profile.email} />
+              <TextInput
+                style={styles.input}
+                placeholderTextColor={'rgba(105, 111, 121, 0.8)'}
+                placeholder={profile.email}
+              />
             </View>
             <View style={styles.inputWrapper}>
               <Text style={styles.inputlabel}>Phone Number</Text>
@@ -102,7 +107,11 @@ export default function Payment(props) {
                 <Icon color={'grey'} size={20} name="call" />
               </Text>
               {/* <View style={styles.lineV} /> */}
-              <TextInput style={styles.input1} placeholder={profile.noTelp} />
+              <TextInput
+                style={styles.input1}
+                placeholderTextColor={'rgba(105, 111, 121, 0.8)'}
+                placeholder={profile.noTelp}
+              />
             </View>
             <View style={styles.alert}>
               <Text style={styles.alertText}>

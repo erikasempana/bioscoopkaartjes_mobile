@@ -171,6 +171,7 @@ export default StyleSheet.create({
     backgroundColor: 'rgba(244, 183, 64, 0.3)',
   },
   alertText: {
+    color: 'rgba(105, 111, 121, 1)',
     textAlign: 'center',
     fontSize: 14,
     fontWeight: '400',

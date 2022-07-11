@@ -3,6 +3,9 @@ import {useSelector} from 'react-redux';
 import {Text, View, ScrollView, TouchableOpacity, FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import styles from './styles';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat);
 
 import Footer from '../../components/Footer';
 import Seat from '../../components/Seat';
@@ -15,6 +18,7 @@ export default function Order(props) {
   const listSeat = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
   const [selectedSeat, setSelectedSeat] = useState([]);
   const [reservedSeat, setReservedSeat] = useState(['A1', 'C7']);
+  console.log('AB', detailOrder);
 
   useEffect(() => {
     console.log('props params', props.route.params);
@@ -61,20 +65,6 @@ export default function Order(props) {
         .reverse()
         .join('')
     );
-  };
-  const tConvert = time => {
-    // Check correct time format and split into components
-    time = time
-      .toString()
-      .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
-
-    if (time.length > 1) {
-      // If time format correct
-      time = time.slice(1); // Remove full string match value
-      time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
-      time[0] = +time[0] % 12 || 12; // Adjust hours
-    }
-    return time.join(''); // return adjusted time or original string
   };
 
   return (
@@ -135,7 +125,7 @@ export default function Order(props) {
                   <TouchableOpacity
                     style={styles.resetBox}
                     onPress={handleResetSeat}>
-                    <Text>Reset</Text>
+                    <Text style={styles.resetBtn}>Reset</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -149,9 +139,11 @@ export default function Order(props) {
             </Text>
             <Text style={styles.movieTitle}>{movieOrder.name}</Text>
             <View style={styles.orderInfo}>
-              <Text style={styles.info1}>{detailOrder.dateBooking}</Text>
+              <Text style={styles.info1}>
+                {detailOrder.dataDateBooking.toISOString().split('T')[0]}
+              </Text>
               <Text style={styles.info2}>
-                {tConvert(detailOrder.timeBooking)}
+                {dayjs(detailOrder.selectedTime, 'HH:mm').format('hh:mm a')}
               </Text>
             </View>
             <View style={styles.orderInfo}>

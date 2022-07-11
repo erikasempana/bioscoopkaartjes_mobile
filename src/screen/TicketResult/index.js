@@ -24,22 +24,6 @@ export default function TicketResult(props) {
   const dispatch = useDispatch();
   const [bookingId, setBookingId] = useState('');
   const ticketDetail = useSelector(state => state.bookingById.data);
-  const [dataTicket, setDataTicket] = useState({});
-
-  console.log('ticket', ticketDetail);
-  // console.log('ticketData', dataTicket);
-
-  const handleDataTicket = async () => {
-    try {
-      const id = props.route.params.id;
-      console.log('ID', id);
-      const result = await dispatch(getBookingById(id));
-      console.log('first', result);
-      setDataTicket(result.action.payload.data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const handleStatusTickets = async () => {
     try {
@@ -70,7 +54,7 @@ export default function TicketResult(props) {
   };
 
   useEffect(() => {
-    handleDataTicket();
+    // handleDataTicket();
     console.log(props.route.params.id);
   }, []);
 
