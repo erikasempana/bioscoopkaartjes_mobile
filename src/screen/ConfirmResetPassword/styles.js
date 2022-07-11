@@ -22,6 +22,7 @@ export default StyleSheet.create({
   tagline: {
     top: 10,
     fontSize: 15,
+    color: 'rgba(134, 146, 166, 1)',
   },
   inputwrapper: {
     top: 25,

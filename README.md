@@ -1,3 +1,5 @@
+<div align="center">
+
 # <h1 align="center">**bioscoopkaartjes_mobile**</h1>
 
 <center>
@@ -48,6 +50,8 @@
 <p align="center">
 <img src="./src/assets/logo/logobiosscoopkaartjes.png" width="250"/>
 </p>
+
+</div>
 
 <br/>
 <hr/>

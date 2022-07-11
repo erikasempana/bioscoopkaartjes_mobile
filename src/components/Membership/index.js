@@ -10,7 +10,11 @@ export default function Membership() {
       <View style={styles.shadow}>
         <View style={styles.card}>
           <Image style={styles.image} source={MemberTitle} />
-          <TextInput style={styles.input} placeholder="Type your email" />
+          <TextInput
+            style={styles.input}
+            placeholderTextColor={'rgba(134, 146, 166, 1)'}
+            placeholder="Type your email"
+          />
           <TouchableOpacity style={styles.button}>
             <Text style={styles.buttontext}>Join now</Text>
           </TouchableOpacity>

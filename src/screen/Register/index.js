@@ -76,6 +76,7 @@ export default function RegisterScreen(props) {
               <Text style={styles.inputlabel}>First Name</Text>
               <TextInput
                 style={styles.input1}
+                placeholderTextColor={'rgba(160, 163, 189, 1)'}
                 placeholder="Write your first name"
                 onChangeText={text => handleChangeForm(text, 'firstName')}
               />
@@ -84,6 +85,7 @@ export default function RegisterScreen(props) {
               <Text style={styles.inputlabel}>Last Name</Text>
               <TextInput
                 style={styles.input1}
+                placeholderTextColor={'rgba(160, 163, 189, 1)'}
                 placeholder="Write your last name"
                 onChangeText={text => handleChangeForm(text, 'lastname')}
               />
@@ -92,6 +94,7 @@ export default function RegisterScreen(props) {
               <Text style={styles.inputlabel}>Phone Number</Text>
               <TextInput
                 style={styles.input1}
+                placeholderTextColor={'rgba(160, 163, 189, 1)'}
                 placeholder="Write your phone number"
                 onChangeText={text => handleChangeForm(text, 'noTelp')}
               />
@@ -100,6 +103,7 @@ export default function RegisterScreen(props) {
               <Text style={styles.inputlabel}>Email</Text>
               <TextInput
                 style={styles.input1}
+                placeholderTextColor={'rgba(160, 163, 189, 1)'}
                 placeholder="Write your email"
                 onChangeText={text => handleChangeForm(text, 'email')}
               />
@@ -109,6 +113,7 @@ export default function RegisterScreen(props) {
               <TextInput
                 secureTextEntry={true}
                 style={styles.input2}
+                placeholderTextColor={'rgba(160, 163, 189, 1)'}
                 placeholder="Write your password"
                 onChangeText={text => handleChangeForm(text, 'password')}
               />

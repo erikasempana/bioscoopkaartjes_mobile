@@ -105,6 +105,7 @@ function LoginScreen(props) {
               <Text style={styles.inputlabel}>Email</Text>
               <TextInput
                 style={styles.input1}
+                placeholderTextColor={'rgba(160, 163, 189, 1)'}
                 placeholder="Write your email"
                 onChangeText={text => handleChangeForm(text, 'email')}
               />
@@ -114,6 +115,7 @@ function LoginScreen(props) {
               <TextInput
                 secureTextEntry={true}
                 style={styles.input2}
+                placeholderTextColor={'rgba(160, 163, 189, 1)'}
                 placeholder="Write your password"
                 onChangeText={text => handleChangeForm(text, 'password')}
               />

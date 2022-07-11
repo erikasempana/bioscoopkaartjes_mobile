@@ -24,6 +24,7 @@ export default StyleSheet.create({
   tagline: {
     top: 10,
     fontSize: 15,
+    color: 'rgba(134, 146, 166, 1)',
   },
   inputwrapper: {
     top: 25,
@@ -74,6 +75,7 @@ export default StyleSheet.create({
   },
   resettext: {
     textAlign: 'center',
+    color: 'rgba(134, 146, 166, 1)',
   },
   innerText: {
     color: '#5F2EEA',

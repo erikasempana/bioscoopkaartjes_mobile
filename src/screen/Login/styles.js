@@ -23,6 +23,7 @@ export default StyleSheet.create({
   tagline: {
     top: 10,
     fontSize: 15,
+    color: 'rgba(134, 146, 166, 1)',
   },
   inputwrapper: {
     top: 40,
@@ -39,7 +40,7 @@ export default StyleSheet.create({
     borderStyle: 'solid',
     borderColor: '#DEDEDE',
     borderRadius: 4,
-    color: '#A0A3BD',
+    color: 'rgba(160, 163, 189, 1)',
   },
   inputlabel2: {
     top: 15,
@@ -73,6 +74,7 @@ export default StyleSheet.create({
   },
   resettext: {
     textAlign: 'center',
+    color: 'rgba(134, 146, 166, 1)',
   },
   innerText: {
     color: '#5F2EEA',
@@ -82,6 +84,7 @@ export default StyleSheet.create({
   },
   signuptext: {
     textAlign: 'center',
+    color: 'rgba(134, 146, 166, 1)',
   },
   // container: {
   //   backgroundColor: 'blue',

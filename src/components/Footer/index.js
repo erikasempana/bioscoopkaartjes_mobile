@@ -29,10 +29,16 @@ export default function Footer(props) {
       <View style={styles.wrapper}>
         <Text style={styles.sub}>Explore</Text>
         <View style={styles.explorelist}>
-          <Text style={{paddingEnd: 20}} onPress={handleHome}>
+          <Text
+            style={{paddingEnd: 20, color: 'rgba(110, 113, 145, 1)'}}
+            onPress={handleHome}>
             Home
           </Text>
-          <Text onPress={handleViewAll}>List Movie</Text>
+          <Text
+            style={{color: 'rgba(110, 113, 145, 1)'}}
+            onPress={handleViewAll}>
+            List Movie
+          </Text>
         </View>
       </View>
       <View style={styles.wrapper}>

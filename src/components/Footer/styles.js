@@ -23,6 +23,7 @@ export default StyleSheet.create({
     fontSize: 14,
     fontWeight: '400',
     lineHeight: 24,
+    color: 'rgba(110, 113, 145, 1)',
   },
   wrapper: {
     paddingTop: 30,
@@ -69,5 +70,6 @@ export default StyleSheet.create({
   },
   footer: {
     paddingTop: 50,
+    color: '    rgba(110, 113, 145, 1)',
   },
 });

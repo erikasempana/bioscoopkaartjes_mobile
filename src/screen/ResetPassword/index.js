@@ -23,6 +23,7 @@ export default function ResetPassword(props) {
             <TextInput
               secureTextEntry={true}
               style={styles.input1}
+              placeholderTextColor={'rgba(160, 163, 189, 1)'}
               placeholder="Write your password"
             />
           </View>
@@ -31,6 +32,7 @@ export default function ResetPassword(props) {
             <TextInput
               secureTextEntry={true}
               style={styles.input1}
+              placeholderTextColor={'rgba(160, 163, 189, 1)'}
               placeholder="Write your confirm password"
             />
           </View>

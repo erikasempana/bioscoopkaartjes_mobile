@@ -90,10 +90,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 3,
     fontWeight: 'bold',
+    color: 'gray',
   },
   caption: {
     fontSize: 14,
     lineHeight: 14,
+    color: 'gray',
   },
   containerSection: {
     marginBottom: 5,

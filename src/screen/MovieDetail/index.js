@@ -45,6 +45,7 @@ export default function MovieDetail(props) {
   const [dataDetailOrder, setDataDetailOrder] = useState({
     movieId: id,
   });
+  const [selectedTime, setSelectedTime] = useState('');
 
   useEffect(() => {
     getDetailMovie();
@@ -62,9 +63,8 @@ export default function MovieDetail(props) {
       ...data,
       dateBooking: dateBooking.toISOString().split('T')[0],
     });
-    console.log('TOUCH BY YOU', data);
+    setSelectedTime(data.timeBooking);
   };
-
   const getDetailMovie = async () => {
     try {
       await dispatch(getMovieById(id));
@@ -83,7 +83,6 @@ export default function MovieDetail(props) {
     }
   };
   const handleRefresh = () => {
-    console.log('REFRESH SCREEN');
     setPage(1);
     setLast(false);
     if (page !== 1) {
@@ -150,8 +149,9 @@ export default function MovieDetail(props) {
       console.log('price', dataDetailOrder);
       const scheduleId = dataDetailOrder.scheduleId;
       await dispatch(dataOrder(body));
-      await dispatch(getScheduleById(scheduleId));
-      props.navigation.replace('Order', {movieId: id, price, scheduleId});
+      const result = await dispatch(getScheduleById(scheduleId));
+      console.log(result);
+      // props.navigation.replace('Order', {movieId: id, price, scheduleId});
     } catch (error) {
       console.log(error);
     }
@@ -212,6 +212,7 @@ export default function MovieDetail(props) {
               <View style={styles.input}>
                 <TextInput
                   editable={false}
+                  placeholderTextColor={'rgba(160, 163, 189, 1)'}
                   placeholder={`${dayjs(dateBooking).format('YYYY-MM-DD')}`}
                 />
               </View>
@@ -284,7 +285,6 @@ export default function MovieDetail(props) {
                 <View style={styles.timeWrapper}>
                   {el.time.split(', ').map(itemTime => (
                     <TouchableOpacity
-                      // disabled={itemTime ? true : false}
                       key={itemTime}
                       onPress={() =>
                         changeDataBooking({
@@ -294,7 +294,11 @@ export default function MovieDetail(props) {
                         })
                       }>
                       <Text
-                        style={itemTime.data ? styles.timeChoose : styles.time}>
+                        style={
+                          itemTime === selectedTime
+                            ? styles.timeChoose
+                            : styles.time
+                        }>
                         {tConvert(itemTime)}
                       </Text>
                     </TouchableOpacity>

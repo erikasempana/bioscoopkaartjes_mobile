@@ -20,6 +20,10 @@ export default function ViewAll(props) {
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
+  const [sort, setSort] = useState('ASC');
+  const [sortBy, setSortBy] = useState('');
+  const [releaseDate, setReleaseDate] = useState('');
+  const [searchName, setSearchName] = useState('');
   const [totalPage, setTotalPage] = useState(8);
   const [refresh, setRefresh] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -27,10 +31,6 @@ export default function ViewAll(props) {
   const [loadMore, setLoadMore] = useState(false);
   const [selectMovie, setSelectMovie] = useState('');
   const [disabled, setDisabled] = useState(false);
-  const [sort, setSort] = useState('ASC');
-  const [sortBy, setSortBy] = useState('');
-  const [releaseDate, setReleaseDate] = useState('');
-  const [searchName, setSearchName] = useState('');
 
   useEffect(() => {
     getDataMovie();

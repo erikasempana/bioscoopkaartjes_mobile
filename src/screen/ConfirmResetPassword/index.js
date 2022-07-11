@@ -22,7 +22,11 @@ export default function ConfirmResetPassword(props) {
         <View style={styles.inputwrapper}>
           <View>
             <Text style={styles.inputlabel}>Email</Text>
-            <TextInput style={styles.input1} placeholder="Write your email" />
+            <TextInput
+              style={styles.input1}
+              placeholderTextColor={'rgba(160, 163, 189, 1)'}
+              placeholder="Write your email"
+            />
           </View>
 
           <TouchableOpacity style={styles.button} onPress={handleConfirmEmail}>
