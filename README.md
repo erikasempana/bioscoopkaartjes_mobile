@@ -95,8 +95,7 @@ This mobile app require permissions:
 
 ## **APK**
 
-- [Debug-APK](https://drive.google.com/file/d/13YpKhlRXcVjDSerphj-fH5FSIGZtopw0/view?usp=sharing)
-- [Release-APK](https://drive.google.com/file/d/1urHuECmL88FaXX2AMByQ02wAeY3yNU9w/view?usp=sharing)
+- Bioscoopkaartjes - debug APK link download >> [Debug-APK](https://drive.google.com/file/d/13YpKhlRXcVjDSerphj-fH5FSIGZtopw0/view?usp=sharing)
 
 <br/>
 <hr/>
