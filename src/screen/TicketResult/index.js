@@ -15,10 +15,7 @@ dayjs.extend(customParseFormat);
 
 import QRCode from '../../assets/images/QRCode.png';
 import Footer from '../../components/Footer';
-import {
-  getBookingById,
-  updateStatusBooking,
-} from '../../stores/actions/booking';
+import {updateStatusBooking} from '../../stores/actions/booking';
 
 export default function TicketResult(props) {
   const dispatch = useDispatch();
